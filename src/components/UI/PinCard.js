@@ -284,7 +284,7 @@ const PinCard = ({ data, smWidth, user }) => {
          }
          {
             (selectedShareButton && selectedID === data._id) &&
-            <ShareModal url={`inspirely.vercel.app/pin-details/${data._id}`} />
+            <ShareModal url={`inspirelyhub.vercel.app/pin-details/${data._id}`} />
          }
       </>
    );

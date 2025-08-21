@@ -26,7 +26,7 @@ const PinDetails = ({ pin }) => {
             list={['Download Image', 'Share Image']}
             pin={mainPin}
          />
-         <ShareModal url={`inspirely.vercel.app/pin-details/${pin._id}`} />
+         <ShareModal url={`inspirelyhub.vercel.app/pin-details/${pin._id}`} />
       </>
    );
 };

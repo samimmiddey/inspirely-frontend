@@ -26,7 +26,7 @@ const ExtraLayout = ({ children }) => {
    const dispatch = useDispatch();
 
    useEffect(() => {
-      dispatch(setSocket(io("https://inspirely.onrender.com")));
+      dispatch(setSocket(io("https://inspirelyhub.onrender.com")));
    }, [dispatch]);
 
    useEffect(() => {
