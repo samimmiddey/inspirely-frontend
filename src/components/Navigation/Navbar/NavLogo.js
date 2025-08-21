@@ -64,7 +64,7 @@ const NavLogo = ({ showMenu, showLogo, lgWidth }) => {
                      })}
                   >
                      <Image
-                        src='/logo-1.png'
+                        src='/logo.png'
                         alt='logo'
                         height={40}
                         width={165}
