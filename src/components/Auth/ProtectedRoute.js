@@ -1,33 +1,26 @@
-import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { authValues } from '../../Redux/slices/authSlice';
+import { useRouter } from 'next/router';
 import Auth from './Auth';
-import { useSelector, useDispatch } from 'react-redux';
-import { authValues, setUser } from '../../Redux/slices/authSlice';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../Firebase/firebase';
+import { useEffect, useState } from 'react';
 import Spinner from '../UI/Spinner';
-import Router from 'next/router';
-import { getUserData } from '../../Redux/slices/authThunks';
 
 const ProtectedRoute = ({ children }) => {
-   const { user, onSignUpLoading, getUserDataLoading } = useSelector(authValues);
-   const dispatch = useDispatch();
+   const { user } = useSelector(authValues);
+   const [redirecting, setRedirecting] = useState(true);
+   const router = useRouter();
 
    useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
-         if (user) {
-            dispatch(getUserData(user.uid));
-         } else {
-            dispatch(setUser(null));
-            Router.replace('/auth');
-         }
-      });
+      if (!user && !router.pathname.startsWith("/auth")) {
+         router.replace("/auth");
+      } else if (user && router.pathname.startsWith("/auth")) {
+         router.replace("/");
+      } else {
+         setRedirecting(false);
+      }
+   }, [user, router]);
 
-      return () => unsubscribe();
-   }, [dispatch]);
-
-   if (getUserDataLoading || onSignUpLoading) {
-      return <Spinner />;
-   };
+   if (redirecting) return <Spinner />;
 
    return (
       <>

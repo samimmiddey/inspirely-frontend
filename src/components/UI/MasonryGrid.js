@@ -16,7 +16,7 @@ const parent = {
          staggerChildren: 0.1
       }
    }
-}
+};
 
 const children = {
    hidden: {
@@ -27,11 +27,11 @@ const children = {
       y: 0,
       opacity: 1,
       transition: {
-         duration: 1,
+         duration: 0.8,
          ease: [0.6, 0.01, -0.05, 0.95]
       }
    }
-}
+};
 
 const MasonryGrid = ({ images }) => {
    const theme = useTheme();
@@ -90,9 +90,8 @@ const MasonryGrid = ({ images }) => {
                         layout='fill'
                         style={{ borderRadius: '15px' }}
                         quality={30}
-                        priority
                         placeholder='blur'
-                        blurDataURL={urlFor(item.image).url()}
+                        blurDataURL={urlFor(item.image).width(20).blur(10).url()}
                      />
                   </Box>
                </Box>
@@ -100,6 +99,6 @@ const MasonryGrid = ({ images }) => {
          </Masonry>
       </Box>
    );
-}
+};
 
 export default MasonryGrid;

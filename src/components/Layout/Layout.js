@@ -6,23 +6,23 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPath } from '../../Redux/slices/pinSlice';
 import { setButtonIndex, setDarkMode, uiValues } from '../../Redux/slices/uiSlice';
+import Auth from '../Auth/Auth';
 
 const authRoutes = ['/auth', '/auth/login', '/auth/signup', '/auth/reset-password'];
 
 const Layout = ({ children }) => {
    const { darkMode } = useSelector(uiValues);
-
    const router = useRouter();
 
+   // Theme Mode
    let getMode = darkMode ? 'dark' : 'light';
 
-   if (typeof window !== 'undefined') {
-      if (getMode === 'dark') {
-         document.body.classList.add('dark');
-      } else {
-         document.body.classList.remove('dark');
+   // Add/remove body class on mode change
+   useEffect(() => {
+      if (typeof window !== 'undefined') {
+         document.body.classList.toggle('dark', darkMode);
       }
-   }
+   }, [darkMode]);
 
    const getDesignTokens = (mode) => ({
       breakpoints: {
@@ -80,12 +80,12 @@ const Layout = ({ children }) => {
          fontFamily: "Montserrat, sans-serif",
 
          // Custom secondary font
-         fontFamilySecondary: "Roboto, serif",
+         fontFamilySecondary: "Roboto, sans-serif",
 
          // Apply fonts to different variants
-         h1: { fontFamily: "Montserrat, serif" },
-         h2: { fontFamily: "Montserrat, serif" },
-         h3: { fontFamily: "Montserrat, serif" },
+         h1: { fontFamily: "Montserrat, sans-serif" },
+         h2: { fontFamily: "Montserrat, sans-serif" },
+         h3: { fontFamily: "Montserrat, sans-serif" },
          body1: { fontFamily: "Roboto, sans-serif" },
          body2: { fontFamily: "Roboto, sans-serif" },
       },
@@ -153,21 +153,19 @@ const Layout = ({ children }) => {
 
    return (
       <ThemeProvider theme={appTheme}>
-         {
-            authRoutes.includes(router.pathname) ? (
-               <ProtectedRoute>
-                  {children}
-               </ProtectedRoute>
-            ) : (
-               <ProtectedRoute>
+         <ProtectedRoute>
+            {
+               authRoutes.includes(router.pathname) ? (
+                  <Auth />
+               ) : (
                   <Navigation>
                      <main className='container'>
                         {children}
                      </main>
                   </Navigation>
-               </ProtectedRoute>
-            )
-         }
+               )
+            }
+         </ProtectedRoute>
       </ThemeProvider>
    );
 };
