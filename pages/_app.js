@@ -12,13 +12,9 @@ import NProgress from 'nprogress';
 import { Router } from 'next/router';
 import { Box } from '@mui/material';
 import { io } from "socket.io-client";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { setSocket, uiValues } from '../src/Redux/slices/uiSlice';
-import { authValues, setUser } from '../src/Redux/slices/authSlice';
-import Spinner from '../src/components/UI/Spinner';
-import { onAuthStateChanged } from 'firebase/auth';
-import { getUserData } from '../src/Redux/slices/authThunks';
-import { auth } from '../src/Firebase/firebase';
+import { authValues } from '../src/Redux/slices/authSlice';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -39,36 +35,6 @@ const ExtraLayout = ({ children }) => {
 
    return (
       <Box>{children}</Box>
-   );
-};
-
-// Firebase on-load check
-const FirebaseAuthCheck = ({ children }) => {
-   const dispatch = useDispatch();
-   const [authInitLoading, setAuthInitLoading] = useState(true);
-
-   useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (loggedInUser) => {
-         if (loggedInUser) {
-            dispatch(getUserData(loggedInUser.uid)).finally(() =>
-               setAuthInitLoading(false)
-            );
-         } else {
-            dispatch(setUser(null));
-            setAuthInitLoading(false);
-         }
-      });
-
-      return () => unsubscribe();
-   }, [dispatch]);
-
-   // Load Spinner
-   if (authInitLoading) {
-      return <Spinner />;
-   };
-
-   return (
-      <>{children}</>
    );
 };
 
@@ -98,11 +64,9 @@ const MyApp = (props) => {
          <ThemeProvider theme={theme}>
             <Provider store={store}>
                <ExtraLayout>
-                  <FirebaseAuthCheck>
-                     <Layout>
-                        <Component {...pageProps} />
-                     </Layout>
-                  </FirebaseAuthCheck>
+                  <Layout>
+                     <Component {...pageProps} />
+                  </Layout>
                </ExtraLayout>
             </Provider>
          </ThemeProvider>
