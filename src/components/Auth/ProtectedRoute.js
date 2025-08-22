@@ -31,7 +31,6 @@ const ProtectedRoute = ({ children }) => {
             }
             setAuthInitLoading(false);
          }
-
       });
 
       return () => unsubscribe();
