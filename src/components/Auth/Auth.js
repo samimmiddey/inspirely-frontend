@@ -45,7 +45,7 @@ const Auth = () => {
       if (user) {
          router.replace('/');
       }
-      if (router.pathname === '/auth' && !user) {
+      if (router.pathname.startsWith('/auth') && !user) {
          const fetchData = async () => {
             const query = `*[_type == "auth"] | order(_createdAt asc) [0...21] {
                title,

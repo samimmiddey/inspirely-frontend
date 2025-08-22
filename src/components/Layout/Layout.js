@@ -8,8 +8,6 @@ import { setPath } from '../../Redux/slices/pinSlice';
 import { setButtonIndex, setDarkMode, uiValues } from '../../Redux/slices/uiSlice';
 import Auth from '../Auth/Auth';
 
-const authRoutes = ['/auth', '/auth/login', '/auth/signup', '/auth/reset-password'];
-
 const Layout = ({ children }) => {
    const { darkMode } = useSelector(uiValues);
    const router = useRouter();
@@ -134,7 +132,7 @@ const Layout = ({ children }) => {
 
    // Setting the path
    useEffect(() => {
-      if (!authRoutes.includes(router.pathname)) {
+      if (!router.pathname.startsWith('/auth')) {
          dispatch(setPath(router.pathname));
       }
    }, [router, dispatch]);
@@ -155,7 +153,7 @@ const Layout = ({ children }) => {
       <ThemeProvider theme={appTheme}>
          <ProtectedRoute>
             {
-               authRoutes.includes(router.pathname) ? (
+               router.pathname.startsWith('/auth') ? (
                   <Auth />
                ) : (
                   <Navigation>
