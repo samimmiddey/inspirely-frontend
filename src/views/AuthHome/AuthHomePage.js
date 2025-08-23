@@ -2,6 +2,9 @@ import AuthLayout from '../../components/Auth/AuthLayout';
 import MasonryGrid from '../../components/UI/MasonryGrid';
 import Box from '@mui/material/Box';
 import AuthHomeMenu from './AuthHomeMenu';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthImageAnimate, uiValues } from '../../Redux/slices/uiSlice';
+import { useEffect } from 'react';
 
 const overlayStyle = {
    position: 'absolute',
@@ -20,10 +23,22 @@ const authCardContainerStyle = {
 };
 
 const AuthHomePage = ({ images }) => {
+   const { authImageAnimate } = useSelector(uiValues);
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+      if (!authImageAnimate) {
+         dispatch(setAuthImageAnimate(true));
+      }
+   }, [authImageAnimate, dispatch]);
+
    return (
       <AuthLayout>
          {/* Masonry Grid */}
-         <MasonryGrid images={images} />
+         <MasonryGrid
+            images={images}
+            hasAnimated={authImageAnimate}
+         />
 
          {/* Overlay */}
          <Box sx={overlayStyle} />

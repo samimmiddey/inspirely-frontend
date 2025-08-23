@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-import { uiValues } from "../../Redux/slices/uiSlice";
+import { useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -18,13 +17,13 @@ const buttons = [
    },
    {
       text: 'Continue with Google',
-      background: '#F8F9F9',
-      color: '#6d6a7c'
+      background: 'bg.grey',
+      color: 'text.primary'
    },
    {
       text: 'Continue with Facebook',
-      background: '#F8F9F9',
-      color: '#6d6a7c'
+      background: 'bg.grey',
+      color: 'text.primary'
    }
 ];
 
@@ -95,8 +94,6 @@ const btnTextStyle = theme => ({
 });
 
 const AuthHomeMenu = () => {
-   const { darkMode } = useSelector(uiValues);
-
    const dispatch = useDispatch();
 
    const theme = useTheme();
@@ -141,7 +138,7 @@ const AuthHomeMenu = () => {
                               }
                            }}>
                               <CustomButton
-                                 background={darkMode ? '#373c49' : item.background}
+                                 background={item.background}
                                  color={item.color}
                               >
                                  <Box sx={btnTextContainerStyle}>

@@ -20,7 +20,8 @@ const initialState = {
    darkMode: false,
    buttonIndex: 0,
    socket: null,
-   notificationAnchorEl: null
+   notificationAnchorEl: null,
+   authImageAnimate: false
 };
 
 const uiSlice = createSlice({
@@ -84,10 +85,13 @@ const uiSlice = createSlice({
       },
       setNotificationAnchorEl: (state, action) => {
          state.notificationAnchorEl = action.payload;
+      },
+      setAuthImageAnimate: (state, action) => {
+         state.authImageAnimate = action.payload;
       }
    }
 });
 
-export const { toggleSidebar, setShowBackdrop, setSearchModal, toggleUserProfile, toggleSnackbar, setSnackbar, setErrorText, setButtonLoading, setSidebarRouteIndex, setActionAnchorEl, setShareAnchorEl, setPinCardActionAnchorEl, setSelected, setSelectedID, setSelectedShareButton, setInputFocus, setDarkMode, setButtonIndex, setSocket, setNotificationAnchorEl } = uiSlice.actions;
+export const { toggleSidebar, setShowBackdrop, setSearchModal, toggleUserProfile, toggleSnackbar, setSnackbar, setErrorText, setButtonLoading, setSidebarRouteIndex, setActionAnchorEl, setShareAnchorEl, setPinCardActionAnchorEl, setSelected, setSelectedID, setSelectedShareButton, setInputFocus, setDarkMode, setButtonIndex, setSocket, setNotificationAnchorEl, setAuthImageAnimate } = uiSlice.actions;
 export const uiValues = (state) => state.ui;
 export default uiSlice;

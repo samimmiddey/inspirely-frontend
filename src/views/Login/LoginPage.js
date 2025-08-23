@@ -5,7 +5,7 @@ const LoginPage = () => {
    return (
       <AuthFormLayout
          title='Welcome Back'
-         text='Enter email and password to access your account'
+         text='Please enter your details to access your account'
       >
          <LoginForm />
       </AuthFormLayout>

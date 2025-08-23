@@ -1,4 +1,9 @@
-import { Backdrop, Box, Card, Typography, useMediaQuery, useTheme } from '@mui/material';
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import { authValues, setAuthErrorText } from '../../Redux/slices/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import CustomButton from '../UI/CustomButton';

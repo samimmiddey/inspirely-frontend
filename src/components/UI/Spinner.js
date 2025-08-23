@@ -1,11 +1,13 @@
+import Box from "@mui/material/Box";
+
 const Spinner = () => {
    return (
-      <div className="spinner-container">
+      <Box sx={{ backgroundColor: 'bg.white' }} className="spinner-container">
          <div className="spinner-main">
             <span className="spinner"></span>
             <div className="spinner-inner"></div>
          </div>
-      </div>
+      </Box>
    );
 };
 

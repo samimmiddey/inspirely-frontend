@@ -21,7 +21,7 @@ const AuthIndex = ({ posts = [], error }) => {
 export default AuthIndex;
 
 export const getStaticProps = async () => {
-   const query = `*[_type == "auth"] | order(_createdAt asc) [0...21] {
+   const query = `*[_type == "auth"] | order(_createdAt asc) [0...25] {
     title,
     image{
       asset->{

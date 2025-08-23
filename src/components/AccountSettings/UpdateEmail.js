@@ -147,7 +147,6 @@ const UpdateEmail = ({ mdWidth, user }) => {
                         errors={errors}
                         placeholder={item.placeholder}
                         autoComplete='new-password'
-                        enableDarkMode={true}
                      />
                   </Box>
                ))

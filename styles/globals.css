@@ -106,8 +106,8 @@ body.dark::-webkit-scrollbar-thumb {
 /* Auth Menu Card */
 .authmenu-card {
   background: rgba(36, 36, 49, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;
 }
 
@@ -229,7 +229,6 @@ body.dark::-webkit-scrollbar-thumb {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--white-bg);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -15,8 +15,7 @@ const CustomTextfield = (
       errors,
       defaultValue,
       rows,
-      autoComplete,
-      enableDarkMode
+      autoComplete
    }
 ) => {
    const { darkMode } = useSelector(uiValues);
@@ -48,15 +47,15 @@ const CustomTextfield = (
             error={errors[name] ? true : false}
             sx={{
                width: '100%',
-               backgroundColor: (darkMode && enableDarkMode) ? '#2c303a' : '#F8F9F9',
+               backgroundColor: darkMode ? '#2c303a' : '#F8F9F9',
                borderRadius: borderRadius,
                '& .MuiOutlinedInput-root': {
                   '& fieldset': {
-                     borderColor: (darkMode && enableDarkMode) ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)',
+                     borderColor: darkMode ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)',
                      borderRadius: borderRadius
                   },
                   '&:hover fieldset': {
-                     borderColor: (darkMode && enableDarkMode) ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)'
+                     borderColor: darkMode ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)'
                   },
                   '&.Mui-focused fieldset': {
                      borderColor: 'secondary.main'

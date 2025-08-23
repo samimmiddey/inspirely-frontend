@@ -1,10 +1,16 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 import Image from 'next/image';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Masonry } from '@mui/lab';
 import { urlFor } from '../../Client/client';
+
+const containerStyle = {
+   position: 'absolute',
+   width: '100%',
+   height: '100%',
+   overflow: 'hidden',
+};
 
 const parent = {
    hidden: {
@@ -33,7 +39,7 @@ const children = {
    }
 };
 
-const MasonryGrid = ({ images }) => {
+const MasonryGrid = ({ images, hasAnimated = false }) => {
    const theme = useTheme();
    const xlWidth = useMediaQuery(theme.breakpoints.down('xl'));
    const lgWidth = useMediaQuery(theme.breakpoints.down('lg'));
@@ -49,21 +55,14 @@ const MasonryGrid = ({ images }) => {
                   xlWidth && lgWidth && mdWidth && smWidth && xssWidth ? 2 : 7;
 
    return (
-      <Box
-         sx={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            overflow: 'hidden',
-         }}
-      >
+      <Box sx={containerStyle}>
          <Masonry
             columns={columns}
             spacing={smWidth ? 0.5 : 1}
             component={motion.div}
             variants={parent}
-            initial='hidden'
-            whileInView='visible'
+            initial={hasAnimated ? false : 'hidden'}
+            animate={hasAnimated ? 'visible' : 'visible'}
             viewport={{ once: true }}
             sx={theme => ({
                margin: 0,
@@ -74,28 +73,29 @@ const MasonryGrid = ({ images }) => {
                }
             })}
          >
-            {images.map((item, index) => (
-               <Box
-                  key={index}
-                  component={motion.div}
-                  variants={children}
-                  viewport={{ once: true }}
-               >
-                  <Box sx={{ position: 'relative' }} className='pin-card-image-container'>
-                     <Image
-                        className='pin-card-image'
-                        // loader={() => urlFor(item.image).width(200).url()}
-                        src={urlFor(item.image).width(250).url()}
-                        alt=''
-                        layout='fill'
-                        style={{ borderRadius: '15px' }}
-                        quality={30}
-                        placeholder='blur'
-                        blurDataURL={urlFor(item.image).width(20).blur(10).url()}
-                     />
+            {
+               images.map((item, index) => (
+                  <Box
+                     key={index}
+                     component={motion.div}
+                     variants={children}
+                     viewport={{ once: true }}
+                  >
+                     <Box sx={{ position: 'relative' }} className='pin-card-image-container'>
+                        <Image
+                           className='pin-card-image'
+                           src={urlFor(item.image).width(250).url()}
+                           alt=''
+                           layout='fill'
+                           style={{ borderRadius: '15px' }}
+                           quality={30}
+                           placeholder='blur'
+                           blurDataURL={urlFor(item.image).width(20).blur(10).url()}
+                        />
+                     </Box>
                   </Box>
-               </Box>
-            ))}
+               ))
+            }
          </Masonry>
       </Box>
    );

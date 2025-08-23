@@ -77,8 +77,8 @@ const Layout = ({ children }) => {
                   white: '#ededed'
                },
                bg: {
-                  white: '#fff',
-                  grey: '#f2f3f4'
+                  white: '#21242c',
+                  grey: '#424857'
                }
             })
       },
