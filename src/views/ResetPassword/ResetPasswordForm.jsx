@@ -1,15 +1,33 @@
-import React, { useEffect } from 'react';
-import { Box } from '@mui/material';
-import AuthFields from './AuthFields';
-import CustomButton from '../UI/CustomButton';
+import Box from '@mui/material/Box';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
+import CustomButton from '../../components/UI/CustomButton';
+import AuthFields from '../../components/Auth/AuthFields';
 import { useSelector, useDispatch } from 'react-redux';
 import { authValues, setResetPasswordEmailSent } from '../../Redux/slices/authSlice';
-import ButtonProgress from '../UI/ButtonProgress';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import ButtonProgress from '../../components/UI/ButtonProgress';
+import { useEffect } from 'react';
 import { resetPassword } from '../../Redux/slices/authThunks';
-import Router from 'next/router';
+
+const fieldsContainerStyle = theme => ({
+   marginTop: '2rem',
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '12px',
+   alignItems: 'flex-start',
+   justifyContent: 'flex-start',
+   width: '100%',
+   [theme.breakpoints.down('xl')]: {
+      marginTop: '1.5rem',
+      gap: '10px'
+   },
+   [theme.breakpoints.down('sm')]: {
+      marginTop: '1.25rem'
+   }
+});
 
 const fields = [
    {
@@ -22,11 +40,14 @@ const fields = [
 
 const defaultValues = {
    email: ''
-}
+};
 
-const ResetPassword = ({ mdWidth }) => {
+const ResetPasswordForm = () => {
    const { authLoading, resetPasswordEmailSent } = useSelector(authValues);
    const dispatch = useDispatch();
+
+   const theme = useTheme();
+   const mdWidth = useMediaQuery(theme.breakpoints.down('md'));
 
    const validationSchema = Yup.object().shape({
       email: Yup.string()
@@ -59,25 +80,11 @@ const ResetPassword = ({ mdWidth }) => {
    }, [resetPasswordEmailSent, dispatch]);
 
    return (
-      <form style={{ width: '100%' }} onSubmit={handleSubmit((data) => handleResetPassword(data))}>
-         <Box
-            sx={theme => ({
-               marginTop: '1rem',
-               display: 'flex',
-               flexDirection: 'column',
-               rowGap: '12px',
-               alignItems: 'flex-start',
-               justifyContent: 'flex-start',
-               width: '100%',
-               [theme.breakpoints.down('xl')]: {
-                  marginTop: '10px',
-               },
-               [theme.breakpoints.down('sm')]: {
-                  marginTop: '5px',
-                  rowGap: '10px'
-               }
-            })}
-         >
+      <form
+         style={{ width: '100%' }}
+         onSubmit={handleSubmit((data) => handleResetPassword(data))}
+      >
+         <Box sx={fieldsContainerStyle}>
             <AuthFields
                fields={fields}
                mdWidth={mdWidth}
@@ -98,4 +105,4 @@ const ResetPassword = ({ mdWidth }) => {
    );
 };
 
-export default ResetPassword;
+export default ResetPasswordForm;

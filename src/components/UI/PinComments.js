@@ -22,7 +22,7 @@ const field = {
 
 const value = {
    comment: ''
-}
+};
 
 const PinComments = ({ pin, user, smWidth, mdWidth }) => {
    const [page, setPage] = useState(1);
@@ -125,6 +125,7 @@ const PinComments = ({ pin, user, smWidth, mdWidth }) => {
                      borderRadius='8px'
                      register={register}
                      errors={errors}
+                     enableDarkMode={true}
                   />
                   <Box sx={{ width: '70px', marginTop: '10px' }}>
                      <CustomButton

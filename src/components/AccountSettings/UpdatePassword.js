@@ -62,7 +62,7 @@ const UpdatePassword = ({ user, mdWidth }) => {
          type: 'password',
          placeholder: 'Enter new password'
       }
-   ]
+   ];
 
    // Handle Update Field
    const handleUpdatePassword = (data) => {
@@ -148,6 +148,7 @@ const UpdatePassword = ({ user, mdWidth }) => {
                         errors={errors}
                         placeholder={item.placeholder}
                         autoComplete='new-password'
+                        enableDarkMode={true}
                      />
                   </Box>
                ))

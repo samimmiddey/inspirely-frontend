@@ -61,7 +61,7 @@ const UpdateEmail = ({ mdWidth, user }) => {
          type: 'email',
          placeholder: `Enter new email`
       }
-   ]
+   ];
 
    // Handle Update Field
    const handleUpdateEmail = (data) => {
@@ -147,6 +147,7 @@ const UpdateEmail = ({ mdWidth, user }) => {
                         errors={errors}
                         placeholder={item.placeholder}
                         autoComplete='new-password'
+                        enableDarkMode={true}
                      />
                   </Box>
                ))

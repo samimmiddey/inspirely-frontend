@@ -1,16 +1,62 @@
-import { Box, Checkbox, Typography } from '@mui/material';
-import CustomButton from '../UI/CustomButton';
-import AuthFields from './AuthFields';
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
+import CustomButton from '../../components/UI/CustomButton';
+import AuthFields from '../../components/Auth/AuthFields';
 import { useSelector, useDispatch } from 'react-redux';
 import { authValues } from '../../Redux/slices/authSlice';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { signIn } from '../../Redux/slices/authThunks';
-import ButtonProgress from '../UI/ButtonProgress';
-import { useState } from 'react';
+import ButtonProgress from '../../components/UI/ButtonProgress';
 import Link from 'next/link';
-import { uiValues } from '../../Redux/slices/uiSlice';
+
+const fieldsContainerStyle = theme => ({
+   marginTop: '2rem',
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '12px',
+   alignItems: 'flex-start',
+   justifyContent: 'flex-start',
+   width: '100%',
+   [theme.breakpoints.down('xl')]: {
+      marginTop: '1.5rem',
+      gap: '10px'
+   },
+   [theme.breakpoints.down('sm')]: {
+      marginTop: '1.25rem'
+   }
+});
+
+const formCheckContainerStyle = theme => ({
+   display: 'flex',
+   alignItems: 'center',
+   justifyContent: 'space-between',
+   width: '100%',
+   [theme.breakpoints.down(350)]: {
+      flexDirection: 'column'
+   }
+});
+
+const rememberTextStyle = {
+   fontSize: '14px',
+   color: 'text.primary',
+   fontWeight: 500
+};
+
+const forgotTextStyle = theme => ({
+   fontSize: '14px',
+   color: 'primary.main',
+   fontWeight: 500,
+   cursor: 'pointer',
+   [theme.breakpoints.down(350)]: {
+      marginBottom: '10px'
+   }
+});
 
 const fields = [
    {
@@ -32,11 +78,13 @@ const defaultValues = {
    password: ''
 };
 
-const Login = ({ mdWidth }) => {
+const LoginForm = () => {
    const [rememberMe, setRememberMe] = useState(false);
    const { authLoading } = useSelector(authValues);
-   const { darkMode } = useSelector(uiValues);
    const dispatch = useDispatch();
+
+   const theme = useTheme();
+   const mdWidth = useMediaQuery(theme.breakpoints.down('md'));
 
    const validationSchema = Yup.object().shape({
       email: Yup.string()
@@ -69,70 +117,24 @@ const Login = ({ mdWidth }) => {
 
    return (
       <form style={{ width: '100%' }} onSubmit={handleSubmit((data) => handleSignin(data))}>
-         <Box
-            sx={theme => ({
-               marginTop: '1rem',
-               display: 'flex',
-               flexDirection: 'column',
-               rowGap: '12px',
-               alignItems: 'flex-start',
-               justifyContent: 'flex-start',
-               width: '100%',
-               [theme.breakpoints.down('xl')]: {
-                  marginTop: '10px',
-               },
-               [theme.breakpoints.down('sm')]: {
-                  marginTop: '5px'
-               }
-            })}
-         >
+         <Box sx={fieldsContainerStyle}>
             <AuthFields
                fields={fields}
                mdWidth={mdWidth}
                register={register}
                errors={errors}
             />
-            <Box
-               sx={theme => ({
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                  [theme.breakpoints.down(350)]: {
-                     flexDirection: 'column'
-                  }
-               })}
-            >
+            <Box sx={formCheckContainerStyle}>
                <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '-10px' }}>
                   <Checkbox
                      onClick={event => setRememberMe(event.target.checked)}
                      size='small'
                      color='secondary'
                   />
-                  <Typography
-                     sx={{
-                        fontSize: '14px',
-                        color: darkMode ? '#afacb9' : '#6d6a7c',
-                        fontWeight: 500
-                     }}
-                  >
-                     Remember me
-                  </Typography>
+                  <Typography sx={rememberTextStyle}>Remember me</Typography>
                </Box>
                <Link href='/auth/reset-password'>
-                  <Typography
-                     sx={theme => ({
-                        fontSize: '14px',
-                        color: darkMode ? '#446dc1' : '#3366cc',
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                        [theme.breakpoints.down(350)]: {
-                           marginBottom: '10px'
-                        }
-                     })}
-                  >
-                     Forgot Password
-                  </Typography>
+                  <Typography sx={forgotTextStyle}>Forgot Password</Typography>
                </Link>
             </Box>
             <CustomButton
@@ -148,4 +150,4 @@ const Login = ({ mdWidth }) => {
    );
 };
 
-export default Login;
+export default LoginForm;

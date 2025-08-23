@@ -1,9 +1,9 @@
-import Auth from '../../src/components/Auth/Auth';
+import SignUpPage from '../../src/views/SignUp/SignUpPage';
 
-const signup = () => {
+const SignUp = () => {
    return (
-      <Auth />
+      <SignUpPage />
    );
 };
 
-export default signup;
+export default SignUp;

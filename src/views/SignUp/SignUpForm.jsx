@@ -1,15 +1,31 @@
-import React from 'react';
-import { Box } from '@mui/material';
-import AuthFields from './AuthFields';
-import CustomButton from '../UI/CustomButton';
+import Box from '@mui/material/Box';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
+import CustomButton from '../../components/UI/CustomButton';
+import AuthFields from '../../components/Auth/AuthFields';
+import { useSelector, useDispatch } from 'react-redux';
+import { authValues } from '../../Redux/slices/authSlice';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { signUp } from '../../Redux/slices/authThunks';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { authValues } from '../../Redux/slices/authSlice';
-import ButtonProgress from '../UI/ButtonProgress';
+import ButtonProgress from '../../components/UI/ButtonProgress';
+
+const fieldsContainerStyle = theme => ({
+   marginTop: '2rem',
+   display: 'flex',
+   flexDirection: 'column',
+   gap: '12px',
+   alignItems: 'flex-start',
+   justifyContent: 'flex-start',
+   width: '100%',
+   [theme.breakpoints.down('xl')]: {
+      marginTop: '1.5rem',
+      gap: '10px'
+   },
+   [theme.breakpoints.down('sm')]: {
+      marginTop: '1.25rem'
+   }
+});
 
 const fields = [
    {
@@ -44,9 +60,12 @@ const defaultValues = {
    password: ''
 };
 
-const SignUp = ({ mdWidth }) => {
+const SignUpForm = () => {
    const { authLoading } = useSelector(authValues);
    const dispatch = useDispatch();
+
+   const theme = useTheme();
+   const mdWidth = useMediaQuery(theme.breakpoints.down('md'));
 
    const validationSchema = Yup.object().shape({
       name: Yup.string()
@@ -87,30 +106,12 @@ const SignUp = ({ mdWidth }) => {
       dispatch(signUp(data));
    };
 
-
    return (
       <form
          style={{ width: '100%' }}
          onSubmit={handleSubmit((data) => handleSignup(data))}
       >
-         <Box
-            sx={theme => ({
-               marginTop: '1rem',
-               display: 'flex',
-               flexDirection: 'column',
-               rowGap: '12px',
-               alignItems: 'flex-start',
-               justifyContent: 'flex-start',
-               width: '100%',
-               [theme.breakpoints.down('xl')]: {
-                  marginTop: '10px',
-               },
-               [theme.breakpoints.down('sm')]: {
-                  marginTop: '5px',
-                  rowGap: '10px'
-               }
-            })}
-         >
+         <Box sx={fieldsContainerStyle}>
             <AuthFields
                fields={fields}
                mdWidth={mdWidth}
@@ -124,11 +125,11 @@ const SignUp = ({ mdWidth }) => {
                type='submit'
                loading={authLoading}
             >
-               {authLoading ? <ButtonProgress /> : 'Sign up'}
+               {authLoading ? <ButtonProgress /> : 'Sign Up'}
             </CustomButton>
          </Box>
       </form>
    );
 };
 
-export default SignUp;
+export default SignUpForm;

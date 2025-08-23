@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
   margin: 0;
@@ -10,6 +10,7 @@
   --primary: #e60023;
   --primary-font: 'Montserrat', sans-serif;
   --secondary-font: 'Roboto', sans-serif;
+  --tertiary-font: "Playfair Display", serif;
 
   --white-bg: #fff;
   --grey-bg: #f2f3f4;
@@ -38,7 +39,6 @@ li {
   color: #e60023;
 }
 
-/* Scrollbar */
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -105,9 +105,9 @@ body.dark::-webkit-scrollbar-thumb {
 
 /* Auth Menu Card */
 .authmenu-card {
-  background: rgba(13, 13, 19, 0.25);
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
+  background: rgba(36, 36, 49, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
 }
 
@@ -281,6 +281,17 @@ body.dark::-webkit-scrollbar-thumb {
   100% {
     transform: rotate(-360deg);
   }
+}
+
+.login-img-container::after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000000;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 1) 100%);
 }
 
 @media screen and (max-width: 1536px) {

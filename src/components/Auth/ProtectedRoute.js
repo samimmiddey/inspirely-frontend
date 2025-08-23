@@ -6,7 +6,6 @@ import { auth } from '../../Firebase/firebase';
 import Spinner from '../UI/Spinner';
 import { useRouter } from 'next/router';
 import { getUserData } from '../../Redux/slices/authThunks';
-import Auth from './Auth';
 
 const ProtectedRoute = ({ children }) => {
    const { user, onSignUpLoading, getUserDataLoading } = useSelector(authValues);
@@ -15,36 +14,52 @@ const ProtectedRoute = ({ children }) => {
    const router = useRouter();
    const dispatch = useDispatch();
 
+   // Check auth state
    useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (loggedInUser) => {
          if (loggedInUser) {
             dispatch(getUserData(loggedInUser.uid)).finally(() => {
                setAuthInitLoading(false);
             });
-            if (router.pathname.startsWith("/auth")) {
-               router.replace("/");
-            }
          } else {
             dispatch(setUser(null));
-            if (!router.pathname.startsWith("/auth")) {
-               router.replace("/auth");
-            }
             setAuthInitLoading(false);
          }
       });
 
       return () => unsubscribe();
-   }, [dispatch, router]);
+   }, [dispatch]);
 
-   if (getUserDataLoading || onSignUpLoading || authInitLoading) {
+   // Redirect logic
+   useEffect(() => {
+      if (authInitLoading || getUserDataLoading || onSignUpLoading) return;
+
+      if (user && router.pathname.startsWith('/auth')) {
+         router.replace('/');
+      }
+      if (!user && !router.pathname.startsWith('/auth')) {
+         router.replace('/auth');
+      }
+   }, [authInitLoading, getUserDataLoading, onSignUpLoading, user, router]);
+
+   // Show spinner while loading or redirecting
+   if (authInitLoading || getUserDataLoading || onSignUpLoading) {
       return <Spinner />;
-   };
+   }
 
-   return (
-      <>
-         {user ? children : <Auth />}
-      </>
-   );
+   // Render children if user is logged in or on /auth pages
+   // Allow auth pages to render
+   if (!user && router.pathname.startsWith('/auth')) {
+      return <>{children}</>;
+   }
+
+   // Allow protected pages for logged-in users
+   if (user && !router.pathname.startsWith('/auth')) {
+      return <>{children}</>;
+   }
+
+   // Fallback for redirects
+   return <Spinner />;
 };
 
 export default ProtectedRoute;

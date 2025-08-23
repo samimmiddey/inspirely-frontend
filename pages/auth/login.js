@@ -1,9 +1,9 @@
-import Auth from '../../src/components/Auth/Auth';
+import LoginPage from '../../src/views/Login/LoginPage';
 
-const LoginPage = () => {
+const Login = () => {
    return (
-      <Auth />
+      <LoginPage />
    );
 };
 
-export default LoginPage;
+export default Login;

@@ -15,14 +15,15 @@ const CustomTextfield = (
       errors,
       defaultValue,
       rows,
-      autoComplete
+      autoComplete,
+      enableDarkMode
    }
 ) => {
    const { darkMode } = useSelector(uiValues);
    const [showPassword, setShowPassword] = useState(false);
 
    const theme = useTheme();
-   const smWidth = useMediaQuery(theme.breakpoints.down('sm'));
+   const xlWidth = useMediaQuery(theme.breakpoints.down('xl'));
 
    const handlePasswordVisibility = () => {
       setShowPassword(prevState => !prevState);
@@ -47,15 +48,15 @@ const CustomTextfield = (
             error={errors[name] ? true : false}
             sx={{
                width: '100%',
-               backgroundColor: darkMode ? '#2c303a' : '#F8F9F9',
+               backgroundColor: (darkMode && enableDarkMode) ? '#2c303a' : '#F8F9F9',
                borderRadius: borderRadius,
                '& .MuiOutlinedInput-root': {
                   '& fieldset': {
-                     borderColor: darkMode ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)',
+                     borderColor: (darkMode && enableDarkMode) ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)',
                      borderRadius: borderRadius
                   },
                   '&:hover fieldset': {
-                     borderColor: darkMode ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)'
+                     borderColor: (darkMode && enableDarkMode) ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)'
                   },
                   '&.Mui-focused fieldset': {
                      borderColor: 'secondary.main'
@@ -66,7 +67,7 @@ const CustomTextfield = (
                style: {
                   height: !rows && height,
                   margin: '0 3px',
-                  fontSize: smWidth ? '14px' : '15px',
+                  fontSize: xlWidth ? '14px' : '15px',
                   fontWeight: 400
                }
             }}

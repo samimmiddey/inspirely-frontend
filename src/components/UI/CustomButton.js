@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 
 const CustomButton = ({ children, background, color, border, type, loading, height, borderRadius, variant, fontSize }) => {
    return (
@@ -12,19 +11,20 @@ const CustomButton = ({ children, background, color, border, type, loading, heig
             minWidth: 0,
             minHeight: 0,
             padding: '0 20px',
-            height: height ? height : '45px',
+            height: height ? height : '46px',
             textTransform: 'none',
             color: color,
             width: '100%',
             borderRadius: borderRadius ? borderRadius : '8px',
             border: border,
             backgroundColor: background,
-            fontSize: fontSize ? fontSize : '14px',
+            fontSize: fontSize ? fontSize : '15px',
             '&:hover': {
                backgroundColor: background
             },
-            [theme.breakpoints.down('md')]: {
-               height: height ? height : '42px'
+            [theme.breakpoints.down('xl')]: {
+               height: height ? height : '42px',
+               fontSize: '14px'
             }
          })}
       >

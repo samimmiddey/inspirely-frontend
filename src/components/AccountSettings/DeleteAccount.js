@@ -51,7 +51,7 @@ const DeleteAccount = ({ mdWidth, user }) => {
          type: 'password',
          placeholder: 'Enter old password'
       }
-   ]
+   ];
 
    // Handle Update Field
    const handleDeleteAccount = (data) => {
@@ -135,6 +135,7 @@ const DeleteAccount = ({ mdWidth, user }) => {
                         errors={errors}
                         placeholder={item.placeholder}
                         autoComplete='new-password'
+                        enableDarkMode={true}
                      />
                   </Box>
                ))

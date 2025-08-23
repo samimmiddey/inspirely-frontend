@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPath } from '../../Redux/slices/pinSlice';
 import { setButtonIndex, setDarkMode, uiValues } from '../../Redux/slices/uiSlice';
-import Auth from '../Auth/Auth';
 
 const Layout = ({ children }) => {
    const { darkMode } = useSelector(uiValues);
@@ -49,7 +48,12 @@ const Layout = ({ children }) => {
                   secondary: '#868395',
                   disabled: '#a19fad',
                   icon: '#545260',
-                  iconLight: '#868395'
+                  iconLight: '#868395',
+                  white: '#fff'
+               },
+               bg: {
+                  white: '#fff',
+                  grey: '#f2f3f4'
                }
             }
             : {
@@ -69,7 +73,12 @@ const Layout = ({ children }) => {
                   secondary: '#afacb9',
                   disabled: '#a19fad',
                   icon: '#aeacb9',
-                  iconLight: '#868395'
+                  iconLight: '#868395',
+                  white: '#ededed'
+               },
+               bg: {
+                  white: '#fff',
+                  grey: '#f2f3f4'
                }
             })
       },
@@ -81,9 +90,12 @@ const Layout = ({ children }) => {
          fontFamilySecondary: "Roboto, sans-serif",
 
          // Apply fonts to different variants
-         h1: { fontFamily: "Montserrat, sans-serif" },
-         h2: { fontFamily: "Montserrat, sans-serif" },
+         h1: { fontFamily: "Playfair Display, serif" },
+         h2: { fontFamily: "Playfair Display, serif" },
          h3: { fontFamily: "Montserrat, sans-serif" },
+         h4: { fontFamily: "Montserrat, sans-serif" },
+         h5: { fontFamily: "Montserrat, sans-serif" },
+         h6: { fontFamily: "Montserrat, sans-serif" },
          body1: { fontFamily: "Roboto, sans-serif" },
          body2: { fontFamily: "Roboto, sans-serif" },
       },
@@ -97,6 +109,11 @@ const Layout = ({ children }) => {
 		  }
          @font-face {
           font-family: 'Roboto';
+          font-style: normal;
+          font-weight: 400;
+        }
+         @font-face {
+          font-family: 'Playfair Display';
           font-style: normal;
           font-weight: 400;
         }
@@ -154,7 +171,7 @@ const Layout = ({ children }) => {
          <ProtectedRoute>
             {
                router.pathname.startsWith('/auth') ? (
-                  <Auth />
+                  children
                ) : (
                   <Navigation>
                      <main className='container'>

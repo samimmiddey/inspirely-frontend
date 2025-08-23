@@ -135,6 +135,7 @@ const GeneralInfo = ({ user, mdWidth }) => {
                      defaultValue={item.value}
                      placeholder={item.placeholder}
                      rows={item.label === 'About' ? 4 : ''}
+                     enableDarkMode={true}
                   />
                </Box>
             ))}

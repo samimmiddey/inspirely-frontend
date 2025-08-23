@@ -1,4 +1,3 @@
-import React from 'react';
 import { Badge, Box, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
@@ -26,14 +25,14 @@ const NavMenu = () => {
    useEffect(() => {
       socket.on("userOffline", data => {
          dispatch(addNotificationDataWhenUserIsOffline(data.receiverID, data));
-      })
+      });
    }, [socket, dispatch]);
 
    // Set notification data to the database
    useEffect(() => {
       socket.on("getNotification", data => {
          dispatch(addNotificationData(user.id, data));
-      })
+      });
    }, [socket, dispatch, user.id]);
 
    // Get existing notifications
