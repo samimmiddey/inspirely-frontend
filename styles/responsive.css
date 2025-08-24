@@ -1,0 +1,70 @@
+/* XL - 1536px */
+@media screen and (max-width: 1536px) {
+   .container {
+      padding: 0 2.5rem;
+   }
+
+   .card-padding {
+      padding: 2.25rem;
+   }
+
+   .spinner {
+      width: 50px;
+      height: 50px;
+      border: 9px dotted var(--primary);
+   }
+
+   .spinner-inner {
+      width: 20px;
+      height: 20px;
+      border: 6px dotted var(--primary);
+   }
+}
+
+/* LG - 1279px */
+@media screen and (max-width: 1279px) {
+   .logo {
+      height: 28px !important;
+      width: 140px !important;
+      min-width: auto !important;
+      margin-left: 6px !important;
+      margin-right: 0 !important;
+   }
+
+   .card-padding {
+      padding: 2rem;
+   }
+}
+
+/* MD - 950px */
+@media screen and (max-width: 950px) {
+   .container {
+      padding: 0 2rem;
+   }
+
+   .logo {
+      height: 28px !important;
+      width: 130px !important;
+   }
+}
+
+/* SM - 650px */
+@media screen and (max-width: 650px) {
+   .container {
+      padding: 0 1rem;
+   }
+
+   .card-padding {
+      padding: 1.5rem;
+   }
+}
+
+/* XS - 500px */
+@media screen and (max-width: 500px) {}
+
+/* 350px */
+@media screen and (max-width: 350px) {
+   .card-padding {
+      padding: 1rem;
+   }
+}

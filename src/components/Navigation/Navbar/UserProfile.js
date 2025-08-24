@@ -1,8 +1,13 @@
-import React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import { Box, Button, ButtonGroup, IconButton, Typography, useMediaQuery, useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { setButtonIndex, setDarkMode, toggleUserProfile, uiValues } from '../../../Redux/slices/uiSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,8 +41,125 @@ export const userProfileData = [
 const iconStyle = theme => ({
    fontSize: '1.25rem',
    marginRight: '8px',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '1.2rem'
+   },
    [theme.breakpoints.down(350)]: {
       display: 'none'
+   }
+});
+
+const containerStyle = {
+   display: 'flex',
+   alignItems: 'center',
+   justifyContent: 'space-between'
+};
+
+const headerTextStyle = theme => ({
+   fontSize: '1.1rem',
+   fontWeight: 700,
+   color: 'text.primary',
+   [theme.breakpoints.down('lg')]: {
+      fontSize: '1rem'
+   }
+});
+
+const infoContainerStyle = theme => ({
+   display: 'flex',
+   alignItems: 'center',
+   gap: '16px',
+   padding: '14px 0',
+   [theme.breakpoints.down('lg')]: {
+      gap: '14px',
+      padding: '12px 0'
+   },
+   [theme.breakpoints.down('sm')]: {
+      gap: '14px',
+      padding: '6px 0 12px 0'
+   },
+   [theme.breakpoints.down(375)]: {
+      flexDirection: 'column',
+      gap: '10px',
+      textAlign: 'center'
+   }
+});
+
+const infoNameStyle = theme => ({
+   fontSize: '1rem',
+   maxWidth: '200px',
+   fontWeight: 600,
+   color: 'text.primary',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '15px'
+   },
+   [theme.breakpoints.down('lg')]: {
+      fontSize: '14px'
+   }
+});
+
+const infoEmailStyle = theme => ({
+   color: 'text.secondary',
+   maxWidth: '200px',
+   fontSize: '14px',
+   fontWeight: 500,
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '13px'
+   }
+});
+
+const menuItemStyle = theme => ({
+   width: '325px',
+   padding: '15px',
+   [theme.breakpoints.down('xl')]: {
+      padding: '14px'
+   },
+   [theme.breakpoints.down(400)]: {
+      width: '300px'
+   },
+   [theme.breakpoints.down(375)]: {
+      width: '275px'
+   },
+   [theme.breakpoints.down(350)]: {
+      width: '250px'
+   },
+   [theme.breakpoints.down(325)]: {
+      width: '225px'
+   },
+   [theme.breakpoints.down(300)]: {
+      width: '200px'
+   }
+});
+
+const settingContainerStyle = theme => ({
+   display: 'flex',
+   alignItems: 'center',
+   gap: '16px',
+   [theme.breakpoints.down('xl')]: {
+      gap: '14px'
+   }
+});
+
+const settingTitleStyle = theme => ({
+   color: 'text.primary',
+   fontWeight: 600,
+   fontSize: '15px',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '14px'
+   }
+});
+
+const settingDescStyle = theme => ({
+   color: 'text.secondary',
+   fontSize: '14px',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '13px'
+   }
+});
+
+const logoutBtnContainerStyle = theme => ({
+   margin: '14px 0 8px 0',
+   [theme.breakpoints.down('lg')]: {
+      marginTop: '12px'
    }
 });
 
@@ -92,22 +214,10 @@ const UserProfile = () => {
          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-         <Box
-            sx={{
-               display: 'flex',
-               alignItems: 'center',
-               justifyContent: 'space-between'
-            }}
-         >
+         <Box sx={containerStyle}>
             <Typography
-               sx={theme => ({
-                  fontSize: '1.1rem',
-                  fontWeight: 600,
-                  color: 'text.primary',
-                  [theme.breakpoints.down('lg')]: {
-                     fontSize: '1rem'
-                  }
-               })}
+               variant='h4'
+               sx={headerTextStyle}
             >
                User Profile
             </Typography>
@@ -118,33 +228,12 @@ const UserProfile = () => {
                <CloseOutlinedIcon sx={{ color: '#e60023' }} />
             </IconButton>
          </Box>
-         <Box
-            sx={theme => ({
-               display: 'flex',
-               alignItems: 'center',
-               columnGap: '16px',
-               padding: '14px 1rem 15px 1rem',
-               [theme.breakpoints.down('lg')]: {
-                  columnGap: '14px',
-                  padding: '10px 1rem 15px 1rem'
-               },
-               [theme.breakpoints.down('sm')]: {
-                  columnGap: '14px',
-                  padding: '6px 1rem 15px 1rem'
-               },
-               [theme.breakpoints.down(375)]: {
-                  columnGap: 0,
-                  flexDirection: 'column',
-                  rowGap: '10px',
-                  textAlign: 'center'
-               }
-            })}
-         >
+         <Box sx={infoContainerStyle}>
             <Image
                src={user.photoURL ? user.photoURL : '/avatar.png'}
                alt=""
-               height={70}
-               width={70}
+               height={60}
+               width={60}
                objectFit='cover'
                style={{ borderRadius: '50%' }}
                quality={50}
@@ -152,32 +241,13 @@ const UserProfile = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                <Typography
                   className='text-wrap'
-                  sx={theme => ({
-                     fontSize: '1rem',
-                     maxWidth: '200px',
-                     fontWeight: 600,
-                     color: 'text.primary',
-                     [theme.breakpoints.down('lg')]: {
-                        fontSize: '15px'
-                     },
-                     [theme.breakpoints.down(325)]: {
-                        fontSize: '14px'
-                     }
-                  })}
+                  sx={infoNameStyle}
                >
                   {user.name}
                </Typography>
                <Typography
                   className='text-wrap'
-                  sx={theme => ({
-                     color: 'text.secondary',
-                     maxWidth: '200px',
-                     fontSize: '14px',
-                     fontWeight: 500,
-                     [theme.breakpoints.down('sm')]: {
-                        fontSize: '13px'
-                     }
-                  })}
+                  sx={infoEmailStyle}
                >
                   {user.email}
                </Typography>
@@ -209,18 +279,22 @@ const UserProfile = () => {
                            }
                         }}
                         key={index}
-                        sx={{
+                        sx={theme => ({
                            width: '100%',
                            textTransform: 'none',
-                           fontSize: '14px',
                            padding: 0,
+                           fontSize: '14px',
                            height: '42px',
-                           backgroundColor: buttonIndex === index && '#e6002315',
+                           backgroundColor: buttonIndex === index && 'bg.lightRed',
                            color: buttonIndex === index ? 'primary.main' : 'text.secondary',
                            '&:hover': {
-                              backgroundColor: buttonIndex === index ? '#e6002315' : 'transparent'
+                              backgroundColor: buttonIndex === index ? 'bg.lightRed' : 'transparent'
+                           },
+                           [theme.breakpoints.down('xl')]: {
+                              fontSize: '13px',
+                              height: '40px'
                            }
-                        }}
+                        })}
                      >
                         {item.icon}{item.text}
                      </Button>
@@ -228,108 +302,58 @@ const UserProfile = () => {
                }
             </ButtonGroup>
          </Box>
-         {userProfileData.map((item, index) => (
-            <Link href={index === 0 ? `/profile/${user.id}` : '/account-settings/general-info'} key={index}>
-               <Box>
-                  <>
-                     <Box>
-                        <MenuItem
-                           onClick={handleClose}
-                           sx={theme => ({
-                              width: '325px',
-                              padding: '15px',
-                              [theme.breakpoints.down('lg')]: {
-                                 padding: '14px'
-                              },
-                              [theme.breakpoints.down(400)]: {
-                                 width: '300px'
-                              },
-                              [theme.breakpoints.down(375)]: {
-                                 width: '275px'
-                              },
-                              [theme.breakpoints.down(350)]: {
-                                 width: '250px'
-                              },
-                              [theme.breakpoints.down(325)]: {
-                                 width: '225px'
-                              },
-                              [theme.breakpoints.down(300)]: {
-                                 width: '200px'
-                              }
-                           })}
-                        >
-                           <Box
-                              sx={theme => ({
-                                 display: 'flex',
-                                 alignItems: 'center',
-                                 columnGap: '16px',
-                                 [theme.breakpoints.down('lg')]: {
-                                    columnGap: '14px'
-                                 }
-                              })}
+         {
+            userProfileData.map((item, index) => (
+               <Link href={index === 0 ? `/profile/${user.id}` : '/account-settings/general-info'} key={index}>
+                  <Box>
+                     <>
+                        <Box>
+                           <MenuItem
+                              onClick={handleClose}
+                              sx={menuItemStyle}
                            >
-                              <Button
-                                 variant='contained'
-                                 disableElevation
-                                 sx={{
-                                    minWidth: '42px',
-                                    minHeight: '42px',
-                                    padding: 0,
-                                    borderRadius: '10px',
-                                    backgroundColor: item.iconBg,
-                                    color: item.iconColor,
-                                    '&:hover': {
+                              <Box sx={settingContainerStyle}>
+                                 <Button
+                                    variant='contained'
+                                    disableElevation
+                                    sx={theme => ({
+                                       minWidth: '42px',
+                                       minHeight: '42px',
+                                       padding: 0,
+                                       borderRadius: '10px',
                                        backgroundColor: item.iconBg,
-                                       opacity: 0.8
-                                    }
-                                 }}
-                              >
-                                 {item.icon}
-                              </Button>
-                              <Box>
-                                 <Typography
-                                    sx={theme => ({
-                                       color: 'text.primary',
-                                       fontWeight: 600,
-                                       fontSize: '15px',
-                                       [theme.breakpoints.down(350)]: {
-                                          fontSize: '14px'
+                                       color: item.iconColor,
+                                       '&:hover': {
+                                          backgroundColor: item.iconBg,
+                                          opacity: 0.8
+                                       },
+                                       [theme.breakpoints.down('xl')]: {
+                                          minWidth: '40px',
+                                          minHeight: '40px'
                                        }
                                     })}
                                  >
-                                    {item.title}
-                                 </Typography>
-                                 <Typography
-                                    sx={theme => ({
-                                       color: 'text.secondary',
-                                       fontSize: '14px',
-                                       [theme.breakpoints.down(350)]: {
-                                          fontSize: '13px'
-                                       }
-                                    })}
-                                 >
-                                    {item.desc}
-                                 </Typography>
+                                    {item.icon}
+                                 </Button>
+                                 <Box>
+                                    <Typography sx={settingTitleStyle}>{item.title}</Typography>
+                                    <Typography sx={settingDescStyle}>{item.desc}</Typography>
+                                 </Box>
                               </Box>
-                           </Box>
-                        </MenuItem>
-                     </Box>
-                     {index !== userProfileData.length - 1 && <Divider sx={{ margin: '0' }} />}
-                  </>
-               </Box>
-            </Link>
-         ))}
+                           </MenuItem>
+                        </Box>
+                        {index !== userProfileData.length - 1 && <Divider sx={{ margin: '0' }} />}
+                     </>
+                  </Box>
+               </Link>
+            ))
+         }
          <Box
             onClick={() => {
                handleClose();
                dispatch(logOut());
             }}
-            sx={theme => ({
-               margin: '14px 0 8px 0',
-               [theme.breakpoints.down('lg')]: {
-                  marginTop: '12px'
-               }
-            })}
+            sx={logoutBtnContainerStyle}
          >
             <CustomButton
                background={!authLoading && 'primary.main'}

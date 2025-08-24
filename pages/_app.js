@@ -8,6 +8,8 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import store from '../src/Redux/store';
 import Layout from '../src/components/Layout/Layout';
 import '../styles/globals.css';
+import '../styles/utility.css';
+import '../styles/responsive.css';
 import NProgress from 'nprogress';
 import { Router } from 'next/router';
 import { Box } from '@mui/material';

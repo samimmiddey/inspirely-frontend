@@ -34,76 +34,14 @@ li {
   list-style: none;
 }
 
-.logo-text {
-  /* text-transform: uppercase; */
-  color: #e60023;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 40px;
-  background-color: rgba(0, 0, 0, 0.15);
-  border: 2px solid rgba(0, 0, 0, 0);
-  background-clip: padding-box;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.025);
-}
-
-
-::-webkit-scrollbar-button {
-  width: 0;
-  height: 0;
-  display: none;
-}
-
-::-webkit-scrollbar-corner {
-  background-color: transparent;
-}
-
-body.dark ::-webkit-scrollbar-thumb,
-body.dark::-webkit-scrollbar-thumb {
-  background-color: rgb(255, 255, 255, 0.15);
-}
-
-/* Icon Size */
 .icon-size {
   font-size: 1.1rem;
 }
 
-/* Container */
-.container {
-  max-width: 1550px;
-  margin: 0 auto;
-  padding: 0 3rem;
-}
-
-@media screen and (max-width: 1280px) {
-  .container {
-    padding: 0 2.5rem;
-  }
-}
-
-@media screen and (max-width: 950px) {
-  .container {
-    padding: 0 2rem;
-  }
-}
-
-@media screen and (max-width: 650px) {
-  .container {
-    padding: 0 1rem;
-  }
-}
-
-/* Masonry Image Auth Page */
 .masonry-img {
   border-radius: 10px;
 }
 
-/* Auth Menu Card */
 .authmenu-card {
   background: rgba(36, 36, 49, 0.25);
   backdrop-filter: blur(12px);
@@ -111,47 +49,6 @@ body.dark::-webkit-scrollbar-thumb {
   border-radius: 20px;
 }
 
-/* Word Wrapping 1 Line */
-/* Text Wrapping */
-.text-wrap {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 1;
-}
-
-.text-wrap-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-/* Card Padding */
-.card-padding {
-  padding: 2.5rem;
-}
-
-@media screen and (max-width: 1280px) {
-  .card-padding {
-    padding: 2rem;
-  }
-}
-
-@media screen and (max-width: 650px) {
-  .card-padding {
-    padding: 1.5rem;
-  }
-}
-
-@media screen and (max-width: 350px) {
-  .card-padding {
-    padding: 1rem;
-  }
-}
-
-/* Pin Card Style */
 .pin-card:hover .pin-card-overlay-box {
   opacity: 1;
 }
@@ -191,23 +88,6 @@ body.dark::-webkit-scrollbar-thumb {
   display: block;
 }
 
-/* NProgress Styles */
-#nprogress .bar {
-  z-index: 9999999999;
-  background: #e60023 !important;
-  height: 3px;
-}
-
-#nprogress .peg {
-  box-shadow: 0 0 0 #e60023, 0 0 0 #e60023;
-}
-
-#nprogress .spinner .spinner-icon {
-  border-top-color: #e60023 !important;
-  border-left-color: #e60023 !important;
-}
-
-/* Search Prediction Modal Card */
 .search-prediction-image-card::after {
   position: absolute;
   content: '';
@@ -216,70 +96,11 @@ body.dark::-webkit-scrollbar-thumb {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .search-prediction-image-card:hover.search-prediction-image-card::after {
   background-color: rgba(0, 0, 0, 0.5);
-}
-
-.spinner-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spinner-main {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.spinner {
-  width: 60px;
-  height: 60px;
-  border: 10px dotted var(--primary);
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 6s linear infinite;
-}
-
-.spinner-inner {
-  position: absolute;
-  width: 26px;
-  height: 26px;
-  border: 8px dotted var(--primary);
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotationInner 3s linear infinite;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes rotationInner {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(-360deg);
-  }
 }
 
 .login-img-container::after {
@@ -291,18 +112,4 @@ body.dark::-webkit-scrollbar-thumb {
   bottom: 0;
   background: #000000;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 1) 100%);
-}
-
-@media screen and (max-width: 1536px) {
-  .spinner {
-    width: 50px;
-    height: 50px;
-    border: 9px dotted var(--primary);
-  }
-
-  .spinner-inner {
-    width: 20px;
-    height: 20px;
-    border: 6px dotted var(--primary);
-  }
 }

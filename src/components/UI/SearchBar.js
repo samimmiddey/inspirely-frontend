@@ -1,14 +1,46 @@
 import React from 'react';
-import { Box, TextField, useMediaQuery, useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import { FiSearch } from 'react-icons/fi';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { setInputFocus } from '../../Redux/slices/uiSlice';
 
-const SearchBar = React.forwardRef(({ height, value, setValue, setSubmitted, darkMode }, ref) => {
+const containerStyle = {
+   width: '100%',
+   height: '100%',
+   display: 'flex',
+   alignItems: 'center',
+   position: 'relative',
+   zIndex: 999999
+};
+
+const textFieldStyle = {
+   width: '100%',
+   backgroundColor: 'bg.deepGrey',
+   borderRadius: '50px',
+   '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+         borderColor: 'transparent',
+         borderRadius: '50px'
+      },
+      '&:hover fieldset': {
+         borderColor: 'transparent',
+      },
+      '&.Mui-focused fieldset': {
+         borderColor: 'secondary.main',
+         borderWidth: '2px'
+      }
+   }
+};
+
+const SearchBar = React.forwardRef(({ height, value, setValue, setSubmitted }, ref) => {
    const dispatch = useDispatch();
 
    const theme = useTheme();
+   const xlWidth = useMediaQuery(theme.breakpoints.down('xl'));
    const mdWidth = useMediaQuery(theme.breakpoints.down('md'));
 
    // Clear the input
@@ -18,16 +50,7 @@ const SearchBar = React.forwardRef(({ height, value, setValue, setSubmitted, dar
    };
 
    return (
-      <Box
-         sx={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            position: 'relative',
-            zIndex: 999999
-         }}
-      >
+      <Box sx={containerStyle}>
          <TextField
             placeholder='Search'
             inputRef={ref}
@@ -35,29 +58,13 @@ const SearchBar = React.forwardRef(({ height, value, setValue, setSubmitted, dar
             onChange={e => setValue(e.target.value)}
             onBlur={() => dispatch(setInputFocus(false))}
             onFocus={() => dispatch(setInputFocus(true))}
-            sx={{
-               width: '100%',
-               backgroundColor: darkMode ? '#2c303a' : '#E5E7E9',
-               borderRadius: '50px',
-               '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                     borderColor: 'transparent',
-                     borderRadius: '50px'
-                  },
-                  '&:hover fieldset': {
-                     borderColor: 'transparent',
-                  },
-                  '&.Mui-focused fieldset': {
-                     borderColor: '#3366cc',
-                     borderWidth: '2px'
-                  }
-               }
-            }}
+            sx={textFieldStyle}
             inputProps={{
                style: {
                   height: height ? height : '15px',
                   marginLeft: mdWidth ? '2rem' : '2.75rem',
-                  marginRight: mdWidth ? '2rem' : '2.75rem'
+                  marginRight: mdWidth ? '2rem' : '2.75rem',
+                  fontSize: xlWidth ? '15px' : '16px'
                }
             }}
          />
@@ -67,7 +74,7 @@ const SearchBar = React.forwardRef(({ height, value, setValue, setSubmitted, dar
                top: '50%',
                left: mdWidth ? '1rem' : '1.5rem',
                transform: 'translateY(-50%)',
-               fontSize: '1.5rem',
+               fontSize: xlWidth ? '1.4rem' : '1.5rem',
                color: '#aeacb9'
             }}
          />

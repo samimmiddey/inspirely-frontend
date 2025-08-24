@@ -1,13 +1,74 @@
-import React from 'react';
-import { Box, Button, MenuItem, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
-import { deleteSingleNotification, markNotificationAsVisited } from '../../Redux/slices/pinThunks';
+import { deleteSingleNotification, markNotificationAsVisited } from '../../../Redux/slices/pinThunks';
 import Image from 'next/image';
-import { urlFor } from '../../Client/client';
+import { urlFor } from '../../../Client/client';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import CustomIconButton from './CustomIconButton';
+import CustomIconButton from '../../UI/CustomIconButton';
+
+const itemContainerStyle = {
+   display: 'flex',
+   alignItems: 'center',
+   columnGap: '10px',
+   width: '100%'
+};
+
+const avatarContainerStyle = {
+   display: 'flex',
+   alignItems: 'center',
+   height: '40px',
+   width: '40px',
+   borderRadius: '50%'
+};
+
+const textContainerStyle = theme => ({
+   display: 'flex',
+   flexDirection: 'column',
+   width: 'calc(100% - 50px)',
+   [theme.breakpoints.down(350)]: {
+      width: '95%'
+   }
+});
+
+const messageStyle = theme => ({
+   color: 'text.primary',
+   fontWeight: 600,
+   fontSize: '15px',
+   maxWidth: '80%',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '14px'
+   },
+   [theme.breakpoints.down(350)]: {
+      maxWidth: '80%'
+   }
+});
+
+const subContainerStyle = {
+   display: 'flex',
+   alignItems: 'center',
+   columnGap: '8px',
+   marginTop: '2px'
+};
+
+const dateStyle = {
+   color: 'text.secondary',
+   fontSize: '12px',
+   fontWeight: 600
+};
+
+const deleteBtnContainer = {
+   position: 'absolute',
+   top: 0,
+   right: '13px',
+   height: '100%',
+   display: 'flex',
+   alignItems: 'center'
+};
 
 const NotificationItem = ({ handleClose, item, smallWidth, darkMode }) => {
    const dispatch = useDispatch();
@@ -24,12 +85,16 @@ const NotificationItem = ({ handleClose, item, smallWidth, darkMode }) => {
                }}
                sx={theme => ({
                   width: '325px',
-                  padding: '13px',
+                  padding: '13px 10px',
                   backgroundColor: !item.visited && '#3366cc25',
                   '&:hover': {
                      backgroundColor: !item.visited && '#3366cc35'
                   },
                   margin: '2px 0',
+                  [theme.breakpoints.down('xl')]: {
+                     padding: '11px 10px',
+                     margin: '1px 0'
+                  },
                   [theme.breakpoints.down(400)]: {
                      width: '300px'
                   },
@@ -47,25 +112,10 @@ const NotificationItem = ({ handleClose, item, smallWidth, darkMode }) => {
                   }
                })}
             >
-               <Box
-                  sx={{
-                     display: 'flex',
-                     alignItems: 'center',
-                     columnGap: '10px',
-                     width: '100%'
-                  }}
-               >
+               <Box sx={itemContainerStyle}>
                   {
                      !smallWidth &&
-                     <Box
-                        sx={{
-                           display: 'flex',
-                           alignItems: 'center',
-                           height: '40px',
-                           width: '40px',
-                           borderRadius: '50%'
-                        }}
-                     >
+                     <Box sx={avatarContainerStyle}>
                         <Image
                            src={item.image ? urlFor(item.image).width(100).url() : '/avatar.png'}
                            alt=''
@@ -75,50 +125,15 @@ const NotificationItem = ({ handleClose, item, smallWidth, darkMode }) => {
                         />
                      </Box>
                   }
-                  <Box
-                     sx={theme => ({
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: 'calc(100% - 50px)',
-                        [theme.breakpoints.down(350)]: {
-                           width: '95%'
-                        }
-                     })}
-                  >
+                  <Box sx={textContainerStyle}>
                      <Typography
                         className='text-wrap'
-                        sx={theme => ({
-                           color: 'text.primary',
-                           fontWeight: 600,
-                           fontSize: '15px',
-                           maxWidth: '80%',
-                           [theme.breakpoints.down('sm')]: {
-                              fontSize: '14px'
-                           },
-                           [theme.breakpoints.down(350)]: {
-                              maxWidth: '80%'
-                           }
-                        })}
+                        sx={messageStyle}
                      >
                         {item.message}
                      </Typography>
-                     <Box
-                        sx={{
-                           display: 'flex',
-                           alignItems: 'center',
-                           columnGap: '8px',
-                           marginTop: '2px'
-                        }}
-                     >
-                        <Typography
-                           sx={{
-                              color: 'text.secondary',
-                              fontSize: '12px',
-                              fontWeight: 600
-                           }}
-                        >
-                           {date}
-                        </Typography>
+                     <Box sx={subContainerStyle}>
+                        <Typography sx={dateStyle}>{date}</Typography>
                         <Button
                            sx={theme => ({
                               height: '16px',
@@ -145,14 +160,7 @@ const NotificationItem = ({ handleClose, item, smallWidth, darkMode }) => {
          </Link>
          <Box
             onClick={() => dispatch(deleteSingleNotification(item._id))}
-            sx={{
-               position: 'absolute',
-               top: 0,
-               right: '13px',
-               height: '100%',
-               display: 'flex',
-               alignItems: 'center'
-            }}
+            sx={deleteBtnContainer}
          >
             <CustomIconButton>
                <DeleteOutlineOutlinedIcon sx={{ color: 'text.iconLight' }} />

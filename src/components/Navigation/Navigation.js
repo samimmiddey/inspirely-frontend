@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Box, useMediaQuery, useTheme } from '@mui/material';
+import { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import Navbar from './Navbar/Navbar';
 import Sidebar from './Sidebar';
-import SearchModal from './Navbar/SearchModal';
 import CustomBackdrop from '../UI/CustomBackdrop';
 import { toggleSidebar, uiValues } from '../../Redux/slices/uiSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import UserProfile from './Navbar/UserProfile';
-import CustomSnackbar from '../UI/CustomSnackbar'
+import CustomSnackbar from '../UI/CustomSnackbar';
 import AuthErrorModal from '../Auth/AuthErrorModal';
 import BackdropSpinner from '../UI/BackdropSpinner';
 import { pinValues } from '../../Redux/slices/pinSlice';

@@ -1,16 +1,120 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Menu from '@mui/material/Menu';
-import { Box, Button, IconButton, Typography, useTheme, useMediaQuery } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotificationAnchorEl, uiValues } from '../../../Redux/slices/uiSlice';
 import CustomButton from '../../UI/CustomButton';
 import { pinValues, setGetScrolledNotifications } from '../../../Redux/slices/pinSlice';
-import NotificationItem from '../../UI/NotificationItem';
+import NotificationItem from './NotificationItem';
 import { loadMoreNotifications } from '../../../Redux/slices/pinThunks';
 import { authValues } from '../../../Redux/slices/authSlice';
 import ButtonProgress from '../../UI/ButtonProgress';
 import Image from 'next/image';
+
+const headerContainerStyle = {
+   display: 'flex',
+   alignItems: 'center',
+   justifyContent: 'space-between'
+};
+
+const headerInfoContainerStyle = theme => ({
+   display: 'flex',
+   alignItems: 'center',
+   columnGap: '16px',
+   [theme.breakpoints.down('xl')]: {
+      columnGap: '12px'
+   },
+   [theme.breakpoints.down(350)]: {
+      columnGap: '8px'
+   }
+});
+
+const headerTitleStyle = theme => ({
+   fontSize: '1.1rem',
+   fontWeight: 700,
+   color: 'text.primary',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '1rem'
+   }
+});
+
+const notificationCountStyle = {
+   minHeight: 0,
+   minWidth: 0,
+   padding: '0 10px',
+   backgroundColor: 'primary.main',
+   textTransform: 'none',
+   fontSize: '12px',
+   color: 'white',
+   '&:hover': {
+      backgroundColor: 'primary.main'
+   }
+};
+
+const notificationBtnStyle = {
+   maxHeight: '400px',
+   overflowY: 'auto',
+   overflowX: 'hidden'
+};
+
+const noNotificationTextStyle = theme => ({
+   fontWeight: 600,
+   color: 'text.primary',
+   marginTop: '8px',
+   width: '325px',
+   padding: '1rem 0',
+   textAlign: 'center',
+   [theme.breakpoints.down('xl')]: {
+      padding: '14px 0'
+   },
+   [theme.breakpoints.down('xs')]: {
+      textAlign: 'start'
+   }
+});
+
+const errorContainerStyle = {
+   display: 'flex',
+   flexDirection: 'column',
+   alignItems: 'center',
+   justifyContent: 'center',
+   marginTop: '1rem'
+};
+
+const errorTextStyle = {
+   fontWeight: 600,
+   color: 'text.primary',
+   padding: '0.5rem 0 5px 0',
+   textAlign: 'center',
+   maxWidth: '325px'
+};
+
+const errorSubTextStyle = {
+   color: 'text.secondary',
+   textAlign: 'center',
+   padding: '0 0 1rem 0',
+   fontSize: '15px',
+   maxWidth: '325px'
+};
+
+const allLoadedTextStyle = theme => ({
+   textAlign: 'center',
+   fontSize: '1rem',
+   fontWeight: 600,
+   color: 'text.primary',
+   marginTop: '1rem',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '15px'
+   },
+   [theme.breakpoints.down(350)]: {
+      fontSize: '14px'
+   }
+});
 
 const Notification = () => {
    const { notificationAnchorEl, darkMode } = useSelector(uiValues);
@@ -70,51 +174,14 @@ const Notification = () => {
          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-         <Box
-            sx={{
-               display: 'flex',
-               alignItems: 'center',
-               justifyContent: 'space-between'
-            }}
-         >
-            <Box
-               sx={theme => ({
-                  display: 'flex',
-                  alignItems: 'center',
-                  columnGap: '16px',
-                  [theme.breakpoints.down(350)]: {
-                     columnGap: '8px'
-                  }
-               })}
-            >
-               <Typography
-                  sx={theme => ({
-                     fontSize: '1.1rem',
-                     fontWeight: 600,
-                     color: 'text.primary',
-                     [theme.breakpoints.down('lg')]: {
-                        fontSize: '1rem'
-                     }
-                  })}
-               >
-                  Notifications
-               </Typography>
+         <Box sx={headerContainerStyle}>
+            <Box sx={headerInfoContainerStyle}>
+               <Typography variant='h4' sx={headerTitleStyle}>Notifications</Typography>
                <Button
                   variant='contained'
                   disableElevation
                   disableRipple
-                  sx={{
-                     minHeight: 0,
-                     minWidth: 0,
-                     padding: '0 10px',
-                     backgroundColor: 'primary.main',
-                     textTransform: 'none',
-                     fontSize: '12px',
-                     color: 'white',
-                     '&:hover': {
-                        backgroundColor: 'primary.main'
-                     }
-                  }}
+                  sx={notificationCountStyle}
                >
                   {notificationCount} new
                </Button>
@@ -126,26 +193,14 @@ const Notification = () => {
                <CloseOutlinedIcon sx={{ color: 'primary.main' }} />
             </IconButton>
          </Box>
-         <Box sx={{ maxHeight: '400px', overflowY: 'auto', overflowX: 'hidden' }}>
+         <Box sx={notificationBtnStyle}>
             {
                !notificationError ?
                   (
                      notificationData.length === 0 ? (
                         <Typography
-                           sx={theme => ({
-                              fontWeight: 600,
-                              color: 'text.primary',
-                              marginTop: '8px',
-                              width: '325px',
-                              padding: '1rem 0',
-                              textAlign: 'center',
-                              [theme.breakpoints.down('lg')]: {
-                                 padding: '14px 0'
-                              },
-                              [theme.breakpoints.down('xs')]: {
-                                 textAlign: 'start'
-                              }
-                           })}
+                           variant='h4'
+                           sx={noNotificationTextStyle}
                         >
                            No new notifications!
                         </Typography>
@@ -161,15 +216,7 @@ const Notification = () => {
                         ))
                      )
                   ) : (
-                     <Box
-                        sx={{
-                           display: 'flex',
-                           flexDirection: 'column',
-                           alignItems: 'center',
-                           justifyContent: 'center',
-                           marginTop: '1rem'
-                        }}
-                     >
+                     <Box sx={errorContainerStyle}>
                         <Image
                            src={darkMode ? '/notification-dark.png' : '/notification-light.png'}
                            alt=''
@@ -177,26 +224,8 @@ const Notification = () => {
                            width={325}
                            objectFit='contain'
                         />
-                        <Typography
-                           sx={{
-                              fontWeight: 600,
-                              color: 'text.primary',
-                              padding: '0.5rem 0 5px 0',
-                              textAlign: 'center',
-                              maxWidth: '325px'
-                           }}
-                        >
-                           Something went wrong!
-                        </Typography>
-                        <Typography
-                           sx={{
-                              color: 'text.secondary',
-                              textAlign: 'center',
-                              padding: '0 0 1rem 0',
-                              fontSize: '15px',
-                              maxWidth: '325px'
-                           }}
-                        >
+                        <Typography sx={errorTextStyle}>Something went wrong!</Typography>
+                        <Typography sx={errorSubTextStyle}>
                            {notificationError.charAt(0).toUpperCase() + notificationError.slice(1)}
                         </Typography>
                      </Box>
@@ -205,20 +234,7 @@ const Notification = () => {
          </Box>
          {
             !getScrolledNotifications && !notificationLoading ? (
-               <Typography
-                  sx={theme => ({
-                     textAlign: 'center',
-                     fontSize: '1rem',
-                     fontWeight: 600,
-                     color: 'text.primary',
-                     marginTop: '1rem',
-                     [theme.breakpoints.down(350)]: {
-                        fontSize: '14px'
-                     }
-                  })}
-               >
-                  All notifications are loaded!
-               </Typography>
+               <Typography sx={allLoadedTextStyle}>All notifications are loaded!</Typography>
             ) : (
                <Box
                   onClick={() => {
@@ -256,6 +272,6 @@ const Notification = () => {
          }
       </Menu >
    );
-}
+};
 
 export default Notification;

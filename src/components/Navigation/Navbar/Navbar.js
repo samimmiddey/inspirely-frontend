@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Box, useTheme, useMediaQuery } from '@mui/material';
+import { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import SearchBar from '../../UI/SearchBar';
 import NavLogo from './NavLogo';
 import NavMenu from './NavMenu';
@@ -13,7 +15,7 @@ import { useRouter } from 'next/router';
 const Navbar = ({ lgWidth }) => {
    const [scrolled, setScrolled] = useState(false);
    const [value, setValue] = useState('');
-   const { sidebar, inputFocus, darkMode } = useSelector(uiValues);
+   const { sidebar, inputFocus } = useSelector(uiValues);
    const [submitted, setSubmitted] = useState(false);
    const [terms, setTerms] = useState([]);
 
@@ -77,7 +79,7 @@ const Navbar = ({ lgWidth }) => {
       <Box
          sx={theme => ({
             position: 'fixed',
-            backgroundColor: darkMode ? '#21242c' : '#F2F3F4',
+            backgroundColor: 'bg.grey',
             top: '0',
             left: 0,
             right: 0,
@@ -107,7 +109,7 @@ const Navbar = ({ lgWidth }) => {
          {/* Logo */}
          <NavLogo
             showMenu={true}
-            showLogo={lgWidth ? true : false}
+            showLogo={false}
          />
          {/* SearchBar */}
          <form
@@ -120,7 +122,6 @@ const Navbar = ({ lgWidth }) => {
                   value={value}
                   setValue={setValue}
                   setSubmitted={setSubmitted}
-                  darkMode={darkMode}
                   ref={ref}
                />
             }

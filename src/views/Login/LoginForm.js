@@ -36,23 +36,30 @@ const formCheckContainerStyle = theme => ({
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'space-between',
+   gap: '1rem',
    width: '100%',
    [theme.breakpoints.down(350)]: {
       flexDirection: 'column'
    }
 });
 
-const rememberTextStyle = {
+const rememberTextStyle = theme => ({
    fontSize: '14px',
    color: 'text.primary',
-   fontWeight: 500
-};
+   fontWeight: 500,
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '13px'
+   }
+});
 
 const forgotTextStyle = theme => ({
    fontSize: '14px',
    color: 'primary.main',
    fontWeight: 500,
    cursor: 'pointer',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '13px'
+   },
    [theme.breakpoints.down(350)]: {
       marginBottom: '10px'
    }

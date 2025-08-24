@@ -1,5 +1,4 @@
-import React from 'react';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 const CustomIconButton = ({ children, background, dimension, component }) => {
    return (

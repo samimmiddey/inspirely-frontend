@@ -53,7 +53,9 @@ const Layout = ({ children }) => {
                },
                bg: {
                   white: '#fff',
-                  grey: '#f2f3f4'
+                  grey: '#f2f3f4',
+                  deepGrey: '#E5E7E9',
+                  lightRed: '#ffe6e9'
                }
             }
             : {
@@ -77,8 +79,10 @@ const Layout = ({ children }) => {
                   white: '#ededed'
                },
                bg: {
-                  white: '#21242c',
-                  grey: '#424857'
+                  white: '#2c303a',
+                  grey: '#21242c',
+                  deepGrey: '#2c303a',
+                  lightRed: '#472936'
                }
             })
       },
@@ -98,6 +102,7 @@ const Layout = ({ children }) => {
          h6: { fontFamily: "Montserrat, sans-serif" },
          body1: { fontFamily: "Roboto, sans-serif" },
          body2: { fontFamily: "Roboto, sans-serif" },
+         button: { fontFamily: "Roboto, sans-serif" }
       },
       components: {
          MuiCssBaseline: {

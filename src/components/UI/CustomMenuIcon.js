@@ -1,5 +1,5 @@
-import React from 'react';
-import { Tooltip, Box } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 import CustomIconButton from './CustomIconButton';
 
 const CustomMenuIcon = ({ title, sx, children }) => {

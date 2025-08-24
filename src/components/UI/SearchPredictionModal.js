@@ -1,9 +1,99 @@
 import React from 'react';
-import { Box, Button, Card, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux';
 import { uiValues } from '../../Redux/slices/uiSlice';
 import Image from 'next/image';
 import { useEffect } from 'react';
+
+const modalContainerStyle = theme => ({
+   minHeight: '200px',
+   width: '100%',
+   marginBottom: '16px',
+   [theme.breakpoints.down('md')]: {
+      minHeight: 'auto',
+      height: 'auto'
+   }
+});
+
+const recentTextStyle = theme => ({
+   fontSize: '14px',
+   color: 'text.secondary',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '13px'
+   }
+});
+
+const termsContainerStyle = {
+   display: 'flex',
+   flexDirection: 'column',
+   marginTop: '10px',
+   alignItems: 'flex-start'
+};
+
+const termBtnStyle = theme => ({
+   fontSize: '15px',
+   textTransform: 'none',
+   height: '36px',
+   width: '100%',
+   padding: '0 100px 0 16px',
+   display: 'flex',
+   justifyContent: 'flex-start',
+   textAlign: 'start',
+   color: 'text.primary',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '14px'
+   },
+   '&:hover': {
+      backgroundColor: 'bg.deepGrey'
+   }
+});
+
+const removeTextStyle = theme => ({
+   position: 'absolute',
+   top: '50%',
+   transform: 'translateY(-50%)',
+   right: '20px',
+   fontSize: '13px',
+   fontWeight: 600,
+   color: 'secondary.main',
+   cursor: 'pointer',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '12px'
+   }
+});
+
+const gridStyle = theme => ({
+   width: '100%',
+   display: 'grid',
+   gridTemplateColumns: 'repeat(4, 1fr)',
+   gap: '10px',
+   [theme.breakpoints.down('lg')]: {
+      gridTemplateColumns: 'repeat(3, 1fr)'
+   },
+   [theme.breakpoints.down('xs')]: {
+      gridTemplateColumns: 'repeat(2, 1fr)'
+   }
+});
+
+const gridBoxStyle = theme => ({
+   position: 'relative',
+   height: '75px',
+   width: '150px',
+   borderRadius: '10px',
+   cursor: 'pointer',
+   [theme.breakpoints.down('xl')]: {
+      height: '65px'
+   },
+   [theme.breakpoints.down('lg')]: {
+      height: '60px'
+   },
+   [theme.breakpoints.down('sm')]: {
+      height: '55px'
+   }
+});
 
 const topics = [
    { text: 'Coding', image: '/mason30.jpg' },
@@ -53,22 +143,16 @@ const SearchPredictionModal = React.forwardRef(({ setValue, submitted, setSubmit
             },
             [theme.breakpoints.down('md')]: {
                top: '50px',
-               borderRadius: 0
+               borderRadius: 0,
+               minHeight: '100%',
+               height: 'calc(100vh - 50px)',
+               gap: '2rem'
             }
          })}
       >
-         <Box sx={{ minHeight: '200px', width: '100%', marginBottom: '16px' }}>
-            <Typography sx={{ fontSize: '14px', color: 'text.secondary' }}>
-               Recent searches
-            </Typography>
-            <Box
-               sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  marginTop: '10px',
-                  alignItems: 'flex-start'
-               }}
-            >
+         <Box sx={modalContainerStyle}>
+            <Typography sx={recentTextStyle}>Recent searches</Typography>
+            <Box sx={termsContainerStyle}>
                {
                   terms.map((term, index) => (
                      <Box
@@ -85,16 +169,7 @@ const SearchPredictionModal = React.forwardRef(({ setValue, submitted, setSubmit
                            disableRipple
                            type={submitted ? 'submit' : 'button'}
                            className='text-wrap'
-                           sx={{
-                              fontSize: '15px',
-                              textTransform: 'none',
-                              height: '35px',
-                              width: '100%',
-                              padding: '0 100px 0 16px',
-                              display: 'flex',
-                              justifyContent: 'flex-start',
-                              textAlign: 'start'
-                           }}
+                           sx={termBtnStyle}
                         >
                            {term}
                         </Button>
@@ -105,16 +180,7 @@ const SearchPredictionModal = React.forwardRef(({ setValue, submitted, setSubmit
                               setTerms(newArr);
                               localStorage.setItem('searchTerms', JSON.stringify(newArr));
                            }}
-                           sx={{
-                              position: 'absolute',
-                              top: '50%',
-                              transform: 'translateY(-50%)',
-                              right: '20px',
-                              fontSize: '13px',
-                              fontWeight: 600,
-                              color: 'secondary.main',
-                              cursor: 'pointer'
-                           }}
+                           sx={removeTextStyle}
                         >
                            Remove
                         </Typography>
@@ -123,23 +189,7 @@ const SearchPredictionModal = React.forwardRef(({ setValue, submitted, setSubmit
                }
             </Box>
          </Box>
-         <Box
-            sx={theme => ({
-               width: '70%',
-               display: 'grid',
-               gridTemplateColumns: 'repeat(4, 1fr)',
-               gap: '10px',
-               [theme.breakpoints.down('xl')]: {
-                  width: '100%'
-               },
-               [theme.breakpoints.down('lg')]: {
-                  gridTemplateColumns: 'repeat(3, 1fr)'
-               },
-               [theme.breakpoints.down('xs')]: {
-                  gridTemplateColumns: 'repeat(2, 1fr)'
-               }
-            })}
-         >
+         <Box sx={gridStyle}>
             {
                topics.map((item, index) => (
                   <Button
@@ -153,19 +203,7 @@ const SearchPredictionModal = React.forwardRef(({ setValue, submitted, setSubmit
                      disableRipple
                      type={submitted ? 'submit' : 'button'}
                      className='pin-card-image-container search-prediction-image-card'
-                     sx={theme => ({
-                        position: 'relative',
-                        height: '75px',
-                        width: '150px',
-                        borderRadius: '15px',
-                        cursor: 'pointer',
-                        [theme.breakpoints.down('lg')]: {
-                           height: '60px'
-                        },
-                        [theme.breakpoints.down('xs')]: {
-                           height: '50px'
-                        }
-                     })}
+                     sx={gridBoxStyle}
                   >
                      <Image
                         src={item.image}
@@ -173,11 +211,11 @@ const SearchPredictionModal = React.forwardRef(({ setValue, submitted, setSubmit
                         height={75}
                         width={150}
                         objectFit='cover'
-                        style={{ borderRadius: '15px' }}
+                        style={{ borderRadius: '10px' }}
                         quality={50}
                      />
                      <Typography
-                        sx={{
+                        sx={theme => ({
                            color: '#fff',
                            fontWeight: 600,
                            fontSize: '13px',
@@ -185,8 +223,11 @@ const SearchPredictionModal = React.forwardRef(({ setValue, submitted, setSubmit
                            top: '50%',
                            left: '50%',
                            zIndex: 1,
-                           transform: 'translateX(-50%) translateY(-50%)'
-                        }}
+                           transform: 'translateX(-50%) translateY(-50%)',
+                           [theme.breakpoints.down('xl')]: {
+                              fontSize: '12px'
+                           }
+                        })}
                      >
                         {item.text}
                      </Typography>

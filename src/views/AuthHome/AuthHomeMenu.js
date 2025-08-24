@@ -17,12 +17,12 @@ const buttons = [
    },
    {
       text: 'Continue with Google',
-      background: 'bg.grey',
+      background: 'bg.white',
       color: 'text.primary'
    },
    {
       text: 'Continue with Facebook',
-      background: 'bg.grey',
+      background: 'bg.white',
       color: 'text.primary'
    }
 ];

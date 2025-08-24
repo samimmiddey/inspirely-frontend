@@ -1,9 +1,13 @@
-import { Badge, Box, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { FiSearch } from 'react-icons/fi';
 import CustomMenuIcon from '../../UI/CustomMenuIcon';
-import { setNotificationAnchorEl, setSearchModal, toggleUserProfile, uiValues } from '../../../Redux/slices/uiSlice';
+import { setInputFocus, setNotificationAnchorEl, setSearchModal, toggleUserProfile, uiValues } from '../../../Redux/slices/uiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { authValues } from '../../../Redux/slices/authSlice';
 import Image from 'next/image';
@@ -11,6 +15,46 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { addNotificationData, addNotificationDataWhenUserIsOffline, getNotificationCount, getNotificationsData } from '../../../Redux/slices/pinThunks';
 import { pinValues } from '../../../Redux/slices/pinSlice';
+
+const containerStyle = theme => ({
+   display: 'flex',
+   alignItems: 'center',
+   columnGap: '10px',
+   [theme.breakpoints.down('sm')]: {
+      columnGap: '5px'
+   }
+});
+
+const searchIconContainerStyle = theme => ({
+   display: 'none',
+   [theme.breakpoints.down('md')]: {
+      display: 'block'
+   }
+});
+
+const notificationIconStyle = theme => ({
+   fontSize: '1.75rem',
+   color: 'text.iconLight',
+   [theme.breakpoints.down('sm')]: {
+      fontSize: '1.5rem'
+   }
+});
+
+const createIconStyle = theme => ({
+   fontSize: '1.75rem',
+   color: 'text.iconLight',
+   [theme.breakpoints.down('sm')]: {
+      fontSize: '1.5rem'
+   }
+});
+
+const profileCircleStyle = {
+   display: 'flex',
+   alignItems: 'center',
+   height: '36px',
+   width: '36px',
+   borderRadius: '50%'
+};
 
 const NavMenu = () => {
    const { user } = useSelector(authValues);
@@ -42,24 +86,13 @@ const NavMenu = () => {
    }, [dispatch, user.id]);
 
    return (
-      <Box
-         sx={theme => ({
-            display: 'flex',
-            alignItems: 'center',
-            columnGap: '10px',
-            [theme.breakpoints.down('sm')]: {
-               columnGap: '5px'
-            }
-         })}
-      >
+      <Box sx={containerStyle}>
          <Box
-            onClick={() => dispatch(setSearchModal(true))}
-            sx={theme => ({
-               display: 'none',
-               [theme.breakpoints.down('md')]: {
-                  display: 'block'
-               }
-            })}
+            onClick={() => {
+               dispatch(setSearchModal(true));
+               dispatch(setInputFocus(true));
+            }}
+            sx={searchIconContainerStyle}
          >
             <CustomMenuIcon title='Search'>
                <FiSearch
@@ -86,27 +119,11 @@ const NavMenu = () => {
                               badgeContent={notificationCount}
                               color='primary'
                            >
-                              <Icon
-                                 sx={theme => ({
-                                    fontSize: '1.75rem',
-                                    color: 'text.iconLight',
-                                    [theme.breakpoints.down('sm')]: {
-                                       fontSize: '1.5rem'
-                                    }
-                                 })}
-                              />
+                              <Icon sx={notificationIconStyle} />
                            </Badge>
                         ) : (
                            <Link href='/create-pin'>
-                              <Icon
-                                 sx={theme => ({
-                                    fontSize: '1.75rem',
-                                    color: 'text.iconLight',
-                                    [theme.breakpoints.down('sm')]: {
-                                       fontSize: '1.5rem'
-                                    }
-                                 })}
-                              />
+                              <Icon sx={createIconStyle} />
                            </Link>
                         )
                      }
@@ -117,13 +134,7 @@ const NavMenu = () => {
          <Tooltip title='Profile' arrow>
             <Box
                onClick={event => dispatch(toggleUserProfile(event.currentTarget))}
-               sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  height: '36px',
-                  width: '36px',
-                  borderRadius: '50%'
-               }}
+               sx={profileCircleStyle}
             >
                <Image
                   src={user.photoURL ? user.photoURL : '/avatar.png'}
