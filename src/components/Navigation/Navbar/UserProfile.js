@@ -26,15 +26,15 @@ export const userProfileData = [
       icon: <RiProfileFill style={{ fontSize: '1.1rem' }} />,
       title: 'Profile',
       desc: 'My Profile',
-      iconColor: '#e60023',
-      iconBg: '#ffccd4'
+      iconColor: 'primary.main',
+      iconBg: 'bg.lightRed'
    },
    {
       icon: <RiSettings2Fill style={{ fontSize: '1.1rem' }} />,
       title: 'Settings',
       desc: 'Account Settings',
-      iconColor: '#e60023',
-      iconBg: '#ffccd4'
+      iconColor: 'primary.main',
+      iconBg: 'bg.lightRed'
    }
 ];
 

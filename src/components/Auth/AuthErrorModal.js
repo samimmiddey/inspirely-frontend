@@ -8,9 +8,11 @@ import { authValues, setAuthErrorText } from '../../Redux/slices/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import CustomButton from '../UI/CustomButton';
 import Image from 'next/image';
+import { uiValues } from '../../Redux/slices/uiSlice';
 
 const AuthErrorModal = () => {
    const { authErrorText } = useSelector(authValues);
+   const { darkMode } = useSelector(uiValues);
 
    const dispatch = useDispatch();
 
@@ -49,7 +51,7 @@ const AuthErrorModal = () => {
             })}
          >
             <Image
-               src={'/error.png'}
+               src={darkMode ? '/errorDark.png' : '/error.png'}
                alt='error logo'
                height={smWidth ? 75 : 96}
                width={smWidth ? 75 : 96}
@@ -78,7 +80,7 @@ const AuthErrorModal = () => {
                onClick={() => dispatch(setAuthErrorText(null))}
             >
                <CustomButton
-                  background='#e60023'
+                  background='primary.main'
                   color='#fff'
                   border='none'
                   type='button'

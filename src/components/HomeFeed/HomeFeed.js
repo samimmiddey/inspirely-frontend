@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { pinValues } from '../../Redux/slices/pinSlice';
 import { loadOnScroll } from '../../Redux/slices/pinThunks';

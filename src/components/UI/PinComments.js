@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
@@ -10,9 +10,10 @@ import { addComment } from '../../Redux/slices/pinThunks';
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonProgress from './ButtonProgress';
 import { pinValues } from '../../Redux/slices/pinSlice';
-import moment from 'moment';
 import CustomPagination from './CustomPagination';
 import Link from 'next/link';
+import { formatDistanceToNow } from 'date-fns';
+import strictLocale from '../../utils/strictLocale';
 
 const field = {
    name: 'comment',
@@ -198,7 +199,10 @@ const PinComments = ({ pin, user, smWidth, mdWidth }) => {
                            fontWeight: 500
                         }}
                      >
-                        {moment(comment.createdAt).fromNow()}
+                        {formatDistanceToNow(new Date(comment.createdAt), {
+                           addSuffix: true,
+                           locale: strictLocale,
+                        })}
                      </Typography>
                   </Box>
                </Box>

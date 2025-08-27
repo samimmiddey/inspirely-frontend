@@ -1,7 +1,6 @@
-import React from 'react';
 import { Box, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import Link from 'next/link';
-import { navElements } from '../Data/data';
+import { navElements } from '../../Data/data';
 import { useSelector } from 'react-redux';
 import { uiValues } from '../../Redux/slices/uiSlice';
 

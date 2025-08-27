@@ -61,10 +61,10 @@ const SearchBar = React.forwardRef(({ height, value, setValue, setSubmitted }, r
             sx={textFieldStyle}
             inputProps={{
                style: {
-                  height: height ? height : '15px',
+                  height: height ? height : (xlWidth ? '12px' : '15px'),
                   marginLeft: mdWidth ? '2rem' : '2.75rem',
                   marginRight: mdWidth ? '2rem' : '2.75rem',
-                  fontSize: xlWidth ? '15px' : '16px'
+                  fontSize: xlWidth ? '14px' : '16px'
                }
             }}
          />
@@ -74,7 +74,7 @@ const SearchBar = React.forwardRef(({ height, value, setValue, setSubmitted }, r
                top: '50%',
                left: mdWidth ? '1rem' : '1.5rem',
                transform: 'translateY(-50%)',
-               fontSize: xlWidth ? '1.4rem' : '1.5rem',
+               fontSize: xlWidth ? '1.35rem' : '1.5rem',
                color: '#aeacb9'
             }}
          />

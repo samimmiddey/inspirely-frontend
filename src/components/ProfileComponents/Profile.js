@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +5,6 @@ import { pinValues } from '../../Redux/slices/pinSlice';
 import PinMasonryGrid from '../UI/PinMasonryGrid';
 import CustomHeader from '../UI/CustomHeader';
 import CustomTabs from '../UI/CustomTabs';
-import CustomSpinner from '../UI/CustomSpinner';
 import { GoUnverified, GoVerified } from 'react-icons/go';
 import Link from 'next/link';
 import CustomButton from '../UI/CustomButton';
@@ -16,6 +14,7 @@ import { authValues } from '../../Redux/slices/authSlice';
 import { uiValues } from '../../Redux/slices/uiSlice';
 import { loadUserPinsOnScroll } from '../../Redux/slices/pinThunks';
 import { urlFor } from '../../Client/client';
+import SpinnerCircle from '../UI/SpinnerCircle';
 
 const Profile = ({ userData, pins, error, saveError, value, loading, tabValue, userID }) => {
    const { user } = useSelector(authValues);
@@ -199,7 +198,7 @@ const Profile = ({ userData, pins, error, saveError, value, loading, tabValue, u
          {((saveError && value === 'two')) && <CustomErrorCard errorText={saveError} />}
          {((allPins.length === 0 && value === 'one')) && <NoPinTemplate />}
          {((savedPins.length === 0 && value === 'two' && !loading)) && <NoPinTemplate />}
-         {loading && value === 'two' && <CustomSpinner />}
+         {loading && value === 'two' && <SpinnerCircle />}
          {
             (value === 'one' && !loading) &&
             <PinMasonryGrid

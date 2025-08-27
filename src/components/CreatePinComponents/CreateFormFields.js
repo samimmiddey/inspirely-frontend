@@ -1,8 +1,7 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
 import StandardTextfield from '../UI/StandardTextfield';
 import CustomSelectBox from '../UI/CustomSelectBox';
-import { categories } from '../Data/data';
+import { categories } from '../../Data/data';
 import { useSelector } from 'react-redux';
 import { authValues } from '../../Redux/slices/authSlice';
 import Image from 'next/image';

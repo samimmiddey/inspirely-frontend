@@ -1,5 +1,7 @@
-import React from 'react';
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { uiValues } from '../../Redux/slices/uiSlice';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
@@ -26,26 +28,25 @@ const PinURLButton = ({ url, maxWidth, padding, iconSize, textSize }) => {
             alignItems: 'center',
             maxWidth: maxWidth,
             padding: padding,
-            backgroundColor: '#F2F3F4',
+            backgroundColor: '#F8F9F9',
             borderRadius: '50px',
             columnGap: '2px',
-            opacity: 0.9,
-            height: '32px',
-            '&:hover': {
-               opacity: 0.8
-            }
+            height: '32px'
          }}
       >
          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <ArrowOutwardIcon sx={{ fontSize: iconSize, color: '#302f37' }} />
+            <ArrowOutwardIcon sx={{ fontSize: iconSize, color: 'text.primary' }} />
          </Box>
          <Typography
             className='text-wrap'
-            sx={{
+            sx={theme => ({
                fontSize: textSize,
                fontWeight: 600,
-               color: '#302f37'
-            }}
+               color: 'text.primary',
+               [theme.breakpoints.down('xl')]: {
+                  fontSize: '12px'
+               }
+            })}
          >
             {finalURL}
          </Typography>

@@ -1,23 +1,17 @@
-import React from 'react';
 import { Backdrop } from '@mui/material';
-import { Circles } from 'react-loader-spinner';
+import SpinnerCircle from './SpinnerCircle';
 
 const BackdropSpinner = ({ value }) => {
    return (
       <Backdrop
          sx={{
             color: '#fff',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
             zIndex: (theme) => theme.zIndex.drawer + 1
          }}
          open={value}
       >
-         <Circles
-            height='50'
-            width='50'
-            color='#fff'
-            ariaLabel="circles-loading"
-            visible={true}
-         />
+         <SpinnerCircle />
       </Backdrop>
    );
 };

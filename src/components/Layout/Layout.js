@@ -55,6 +55,7 @@ const Layout = ({ children }) => {
                   white: '#fff',
                   grey: '#f2f3f4',
                   deepGrey: '#E5E7E9',
+                  lightGrey: '#f1f2f3',
                   lightRed: '#ffe6e9'
                }
             }
@@ -82,7 +83,8 @@ const Layout = ({ children }) => {
                   white: '#2c303a',
                   grey: '#21242c',
                   deepGrey: '#2c303a',
-                  lightRed: '#472936'
+                  lightGrey: '#373c49',
+                  lightRed: '#512f3d'
                }
             })
       },

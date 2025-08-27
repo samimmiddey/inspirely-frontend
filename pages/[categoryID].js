@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { client } from '../src/Client/client';
 import CategoryFeed from '../src/components/CategoryFeed/CategoryFeed';
-import { categories } from '../src/components/Data/data';
+import { categories } from '../src/Data/data';
 import CustomErrorCard from '../src/components/UI/CustomErrorCard';
 import NoPinTemplate from '../src/components/UI/NoPinTemplate';
 import { categoryQuery } from '../src/queries/queries';

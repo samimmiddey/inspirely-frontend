@@ -1,6 +1,8 @@
-import React from 'react';
 import Box from '@mui/material/Box';
-import { CircularProgress, Typography, useMediaQuery, useTheme } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Masonry } from '@mui/lab';
 import PinCard from './PinCard';
@@ -8,6 +10,26 @@ import { useSelector } from 'react-redux';
 import { authValues } from '../../Redux/slices/authSlice';
 import { pinValues } from '../../Redux/slices/pinSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
+const containerStyle = {
+   width: '100%',
+   height: '100%',
+   marginBottom: '-1rem'
+};
+
+const loadedTextStyle = {
+   textAlign: 'center',
+   fontSize: '1.2rem',
+   fontWeight: 600,
+   color: 'text.primary'
+};
+
+const loadingContainerStyle = {
+   display: 'flex',
+   justifyContent: 'center',
+   height: '50px',
+   alignItems: 'center'
+};
 
 const PinMasonryGrid = ({ posts, handleScroll }) => {
    const { user } = useSelector(authValues);
@@ -25,13 +47,7 @@ const PinMasonryGrid = ({ posts, handleScroll }) => {
             xlWidth && mdWidth && smWidth && xxsWidth ? 1 : 5;
 
    return (
-      <Box
-         sx={{
-            width: '100%',
-            height: '100%',
-            marginBottom: '-1rem'
-         }}
-      >
+      <Box sx={containerStyle}>
          <InfiniteScroll
             dataLength={posts.length}
             next={handleScroll}
@@ -43,43 +59,36 @@ const PinMasonryGrid = ({ posts, handleScroll }) => {
                spacing={smWidth ? 1.5 : 2}
                sx={{ margin: 0 }}
             >
-               {posts.map((data, index) => (
-                  <Box
-                     key={index}
-                     component={motion.div}
-                     initial={{ opacity: 0, y: 15 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     transition={{
-                        duration: 0.5,
-                        ease: [0.6, 0.01, -0.05, 0.95],
-                        delay: index >= 20 ? Math.round(index % (Math.floor(index / 20) * 20)) * 0.1 : index * 0.1
-                     }}
-                  >
-                     <PinCard
-                        data={data}
-                        smWidth={smWidth}
-                        user={user}
-                     />
-                  </Box>
-               ))}
+               {
+                  posts.map((data, index) => (
+                     <Box
+                        key={data._id}
+                        component={motion.div}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                           duration: 0.5,
+                           ease: [0.6, 0.01, -0.05, 0.95],
+                           delay: index >= 20 ? Math.round(index % (Math.floor(index / 20) * 20)) * 0.1 : index * 0.1
+                        }}
+                     >
+                        <PinCard
+                           data={data}
+                           smWidth={smWidth}
+                           user={user}
+                        />
+                     </Box>
+                  ))
+               }
             </Masonry>
-            <Box sx={{ display: 'flex', justifyContent: 'center', height: '50px', alignItems: 'center' }}>
+            <Box sx={loadingContainerStyle}>
                {
                   scrollLoading &&
                   <CircularProgress size={35} />
                }
                {
                   !getScrolledPosts && !scrollLoading &&
-                  <Typography
-                     sx={{
-                        textAlign: 'center',
-                        fontSize: '1.2rem',
-                        fontWeight: 600,
-                        color: 'text.primary'
-                     }}
-                  >
-                     All pins are loaded!
-                  </Typography>
+                  <Typography sx={loadedTextStyle}>All pins are loaded!</Typography>
                }
             </Box>
          </InfiniteScroll>

@@ -35,6 +35,9 @@ const searchIconContainerStyle = theme => ({
 const notificationIconStyle = theme => ({
    fontSize: '1.75rem',
    color: 'text.iconLight',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '1.6rem'
+   },
    [theme.breakpoints.down('sm')]: {
       fontSize: '1.5rem'
    }
@@ -43,6 +46,9 @@ const notificationIconStyle = theme => ({
 const createIconStyle = theme => ({
    fontSize: '1.75rem',
    color: 'text.iconLight',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '1.6rem'
+   },
    [theme.breakpoints.down('sm')]: {
       fontSize: '1.5rem'
    }
@@ -97,7 +103,7 @@ const NavMenu = () => {
             <CustomMenuIcon title='Search'>
                <FiSearch
                   style={{
-                     fontSize: smWidth ? '1.3rem' : '1.5rem',
+                     fontSize: smWidth ? '1.35rem' : '1.45rem',
                      color: '#868395'
                   }}
                />

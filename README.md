@@ -2,7 +2,7 @@
 
 Inspirely is a fully fledged modern full-stack social media app built with various modern technologies and it includes some amazing features such as authentication, creating pins, saving pins, the ability to comment on each post and realtime notifications. It is a NextJS app and it uses some incredible built-in NextJS features such as server-side rendering and image optimization. <a href="https://inspirelyhub.vercel.app" target="_blank">Visit</a>
 
-![demo image](./public/demo.png)
+![demo image](./public/demo.webp)
 
 ## **ABOUT**
 
@@ -43,9 +43,8 @@ The main motive behind creating this app was to create a platform which is not o
 - Socket IO Client
 - React Icons
 - React Infinite Scroller
-- React Loader Spinner
 - Framer Motion
-- MomentJS
+- Date-FNS
 - NProgress
 - Axios
 - UUID

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import { urlFor } from '../../Client/client';
 import CustomButton from './CustomButton';
@@ -18,6 +18,80 @@ import PinURLButton from './PinURLButton';
 import PinCardAction from './PinCardAction';
 import ShareModal from './ShareModal';
 
+const imgContainerStyle = {
+   position: 'relative',
+   overflow: 'hidden',
+   borderRadius: '15px'
+};
+
+const catgeoryTextStyle = theme => ({
+   color: 'text.white',
+   fontWeight: 500,
+   maxWidth: '100px',
+   cursor: 'pointer',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '14px'
+   }
+});
+
+const cardContentStyle = {
+   display: 'flex',
+   alignItems: 'center',
+   justifyContent: 'space-between',
+   columnGap: '5px'
+};
+
+const menuBtnsContainer = {
+   display: 'flex',
+   alignItems: 'center',
+   columnGap: '8px'
+};
+
+const cardFooterStyle = theme => ({
+   marginTop: '8px',
+   cursor: 'pointer',
+   [theme.breakpoints.down('xl')]: {
+      marginTop: '7px'
+   }
+});
+
+const pinTitleStyle = theme => ({
+   fontSize: '15px',
+   fontWeight: 600,
+   color: 'text.primary',
+   lineHeight: 1.3,
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '14px'
+   },
+   [theme.breakpoints.down('md')]: {
+      fontSize: '13px'
+   },
+});
+
+const userInfoStyle = theme => ({
+   display: 'flex',
+   alignItems: 'center',
+   gap: '6px',
+   position: 'relative',
+   marginTop: '6px',
+   [theme.breakpoints.down('xl')]: {
+      gap: '5px'
+   },
+   [theme.breakpoints.down('md')]: {
+      marginTop: '4px'
+   }
+});
+
+const nameStyle = theme => ({
+   fontSize: '13px',
+   fontWeight: 500,
+   width: '82%',
+   color: 'text.primary',
+   [theme.breakpoints.down('xl')]: {
+      fontSize: '12px'
+   }
+});
+
 const PinCard = ({ data, smWidth, user }) => {
    const { buttonLoading, selected, selectedID, selectedShareButton } = useSelector(uiValues);
    const { selectedPin } = useSelector(pinValues);
@@ -33,19 +107,23 @@ const PinCard = ({ data, smWidth, user }) => {
          <Link href={`/pin-details/${data._id}`}>
             <Box
                className='pin-card'
-               sx={{ paddingBottom: smWidth ? '5px' : '10px' }}
+               sx={{ paddingBottom: smWidth ? '5px' : '8px' }}
             >
-               <Box sx={{ position: 'relative' }} className='pin-card-image-container'>
+               <Box
+                  className='pin-card-image-container'
+                  sx={imgContainerStyle}
+               >
                   <Image
                      className='pin-card-image'
                      loader={() => urlFor(data.image).width(250).url()}
                      src={urlFor(data.image).url()}
                      alt=''
                      layout='fill'
-                     style={{ borderRadius: '15px' }}
                      quality={50}
-                     priority
+                     placeholder="blur"
+                     blurDataURL={urlFor(data.image).width(20).blur(50).url()}
                   />
+
                   {/* Overlay box */}
                   <Box
                      className={'pin-card-overlay-box'}
@@ -61,33 +139,17 @@ const PinCard = ({ data, smWidth, user }) => {
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                         padding: '12px',
-                        // display: 'none',
                         opacity: (selected || selectedShareButton) && data._id === selectedID ? 1 : 0,
                         zIndex: 99,
                         cursor: 'zoom-in'
                      }}
                   >
-                     <Box
-                        sx={{
-                           display: 'flex',
-                           alignItems: 'center',
-                           justifyContent: 'space-between',
-                           columnGap: '5px'
-                        }}
-                     >
+                     <Box sx={cardContentStyle}>
                         <Link href={`/${data.category}`}>
                            <Typography
                               onClick={() => dispatch(setSidebarRouteIndex(null))}
                               className='text-wrap'
-                              sx={theme => ({
-                                 color: '#fff',
-                                 fontWeight: 600,
-                                 maxWidth: '100px',
-                                 cursor: 'pointer',
-                                 [theme.breakpoints.down('sm')]: {
-                                    fontSize: '14px'
-                                 }
-                              })}
+                              sx={catgeoryTextStyle}
                            >
                               {data.category.charAt(0).toUpperCase() + data.category.slice(1)}
                            </Typography>
@@ -126,7 +188,7 @@ const PinCard = ({ data, smWidth, user }) => {
                               ) : (
                                  <CustomButton
                                     background={selectedPin?._id === data._id && buttonLoading ? '#e6e6e6' : 'primary.main'}
-                                    color='#fff'
+                                    color='text.white'
                                     type='button'
                                     height='40px'
                                     borderRadius='20px'
@@ -152,6 +214,7 @@ const PinCard = ({ data, smWidth, user }) => {
                            }
                         })}
                      >
+
                         {/* Destination URL button */}
                         {
                            data.destination &&
@@ -160,17 +223,12 @@ const PinCard = ({ data, smWidth, user }) => {
                               maxWidth='100%'
                               padding='8px 10px'
                               iconSize='1rem'
-                              textSize='13px'
+                              textSize={'13px'}
                            />
                         }
+
                         {/* Menu Buttons */}
-                        <Box
-                           sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              columnGap: '8px'
-                           }}
-                        >
+                        <Box sx={menuBtnsContainer}>
                            <Box
                               onClick={e => {
                                  e.stopPropagation();
@@ -222,29 +280,19 @@ const PinCard = ({ data, smWidth, user }) => {
                         </Box>
                      </Box>
                   </Box>
+
                </Box>
+
                {/* Pin card footer details */}
-               <Box sx={{ marginTop: '5px', cursor: 'pointer' }}>
+               <Box sx={cardFooterStyle}>
                   <Typography
                      className='text-wrap-2'
-                     sx={{
-                        fontSize: smWidth ? '13px' : '14px',
-                        fontWeight: 600,
-                        color: 'text.primary'
-                     }}
+                     sx={pinTitleStyle}
                   >
                      {data.title}
                   </Typography>
                   <Link href={`/profile/${data.postedBy._id}`}>
-                     <Box
-                        sx={{
-                           display: 'flex',
-                           alignItems: 'center',
-                           columnGap: '5px',
-                           position: 'relative',
-                           marginTop: smWidth ? '3px' : '5px'
-                        }}
-                     >
+                     <Box sx={userInfoStyle}>
                         <Image
                            src={data.postedBy.image ? urlFor(data.postedBy.image).width(50).url() : '/avatar.png'}
                            alt=''
@@ -255,23 +303,18 @@ const PinCard = ({ data, smWidth, user }) => {
                         />
                         <Typography
                            className='text-wrap'
-                           sx={theme => ({
-                              fontSize: '13px',
-                              fontWeight: 500,
-                              width: '82%',
-                              color: 'text.primary',
-                              [theme.breakpoints.down('sm')]: {
-                                 fontSize: '12px'
-                              }
-                           })}
+                           sx={nameStyle}
                         >
                            {data.postedBy.userName}
                         </Typography>
                      </Box>
                   </Link>
                </Box>
+
             </Box>
          </Link>
+
+         {/* Actions */}
          {
             data.postedBy._id === user.id &&
             (

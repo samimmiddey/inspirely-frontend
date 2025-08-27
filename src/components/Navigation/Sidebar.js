@@ -7,7 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import NavLogo from './Navbar/NavLogo';
-import { categories } from '../Data/data';
+import { categories } from '../../Data/data';
 import { setSidebarRouteIndex, toggleSidebar, uiValues } from '../../Redux/slices/uiSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -21,7 +21,8 @@ const backdropStyle = theme => ({
    display: 'none',
    [theme.breakpoints.down('lg')]: {
       zIndex: 99999999,
-      display: 'block'
+      display: 'block',
+      backgroundColor: 'rgba(0, 0, 0, 0.7)'
    }
 });
 
@@ -180,9 +181,9 @@ const Sidebar = ({ lgWidth }) => {
                                  px: 0.75,
                                  borderRadius: '8px',
                                  justifyContent: 'initial',
-                                 backgroundColor: sidebarRouteIndex === index || (item.text === 'Home' ? router.asPath : router.asPath.replace('/', '')) === (item.text === 'Home' ? '/' : item.text.split(' ').join('').toLowerCase()) ? ('bg.lightRed') : '',
+                                 backgroundColor: sidebarRouteIndex === index || (item.text === 'Home' ? router.asPath : router.asPath.replace('/', '')) === (item.text === 'Home' ? '/' : item.text.split(' ').join('').toLowerCase()) ? ('bg.lightGrey') : '',
                                  '&:hover': {
-                                    backgroundColor: sidebarRouteIndex === index || (item.text === 'Home' ? router.asPath : router.asPath.replace('/', '')) === (item.text === 'Home' ? '/' : item.text.split(' ').join('').toLowerCase()) ? ('bg.lightRed') : ''
+                                    backgroundColor: sidebarRouteIndex === index || (item.text === 'Home' ? router.asPath : router.asPath.replace('/', '')) === (item.text === 'Home' ? '/' : item.text.split(' ').join('').toLowerCase()) ? ('bg.lightGrey') : ''
                                  },
                                  [theme.breakpoints.down('xl')]: {
                                     padding: '6px'
@@ -197,7 +198,7 @@ const Sidebar = ({ lgWidth }) => {
                            >
                               <ListItemIcon
                                  sx={{
-                                    color: sidebarRouteIndex === index || (item.text === 'Home' ? router.asPath : router.asPath.replace('/', '')) === (item.text === 'Home' ? '/' : item.text.split(' ').join('').toLowerCase()) ? 'primary.main' : 'text.secondary',
+                                    color: sidebarRouteIndex === index || (item.text === 'Home' ? router.asPath : router.asPath.replace('/', '')) === (item.text === 'Home' ? '/' : item.text.split(' ').join('').toLowerCase()) ? 'text.primary' : 'text.secondary',
                                     mr: 0.75,
                                     justifyContent: 'center',
                                  }}
@@ -207,7 +208,7 @@ const Sidebar = ({ lgWidth }) => {
                               <ListItemText
                                  primary={<Typography sx={categoryTextStyle}>{item.text}</Typography>}
                                  sx={{
-                                    color: sidebarRouteIndex === index || (item.text === 'Home' ? router.asPath : router.asPath.replace('/', '')) === (item.text === 'Home' ? '/' : item.text.split(' ').join('').toLowerCase()) ? 'primary.main' : 'text.secondary'
+                                    color: sidebarRouteIndex === index || (item.text === 'Home' ? router.asPath : router.asPath.replace('/', '')) === (item.text === 'Home' ? '/' : item.text.split(' ').join('').toLowerCase()) ? 'text.primary' : 'text.secondary'
                                  }}
                               />
                            </ListItemButton>

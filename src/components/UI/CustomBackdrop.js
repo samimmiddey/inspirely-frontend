@@ -1,4 +1,3 @@
-import React from 'react';
 import { uiValues } from '../../Redux/slices/uiSlice';
 import { useSelector } from 'react-redux';
 import { Backdrop } from '@mui/material';
@@ -11,7 +10,7 @@ const CustomBackdrop = () => {
          open={inputFocus}
          sx={{
             zIndex: 999,
-            background: 'rgba(0, 0, 0, 0.5)'
+            background: 'rgba(0, 0, 0, 0.6)'
          }}
       />
    );

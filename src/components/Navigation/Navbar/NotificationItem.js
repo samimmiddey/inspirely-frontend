@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import moment from 'moment';
+import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { deleteSingleNotification, markNotificationAsVisited } from '../../../Redux/slices/pinThunks';
@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { urlFor } from '../../../Client/client';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import CustomIconButton from '../../UI/CustomIconButton';
+import strictLocale from '../../../utils/strictLocale';
 
 const itemContainerStyle = {
    display: 'flex',
@@ -73,7 +74,10 @@ const deleteBtnContainer = {
 const NotificationItem = ({ handleClose, item, smallWidth, darkMode }) => {
    const dispatch = useDispatch();
 
-   const date = moment(item.createdAt).fromNow();
+   const date = formatDistanceToNow(new Date(item.createdAt), {
+      addSuffix: true,
+      locale: strictLocale,
+   });
 
    return (
       <Box sx={{ position: 'relative' }}>

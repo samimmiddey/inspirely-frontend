@@ -1,7 +1,6 @@
-import React from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import Link from 'next/link';
-import { navElements } from '../Data/data';
+import { navElements } from '../../Data/data';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import GeneralInfo from './GeneralInfo';
 import UpdateInfo from './UpdateInfo';

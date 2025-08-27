@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import { Box, IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme, useMediaQuery } from '@mui/material';
@@ -47,7 +47,7 @@ const CustomSnackbar = () => {
    };
 
    return (
-      <Box>
+      <div>
          <Snackbar
             ContentProps={{
                sx: {
@@ -75,8 +75,8 @@ const CustomSnackbar = () => {
                </React.Fragment>
             }
          />
-      </Box>
+      </div>
    );
-}
+};
 
 export default CustomSnackbar;

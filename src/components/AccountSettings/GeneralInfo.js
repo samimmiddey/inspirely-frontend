@@ -59,15 +59,14 @@ const GeneralInfo = ({ user, mdWidth }) => {
          .required('Name is required')
          .min(2, 'Name must be at least 2 characters')
          .max(100, 'Name must not exceed 100 characters')
-         .matches(/^\s*([A-Za-z]{1,}([.,] |[-']| ))+[A-Za-z]+.?\s*$/, 'Please enter a valid full name'),
+         .matches(/^\s*([A-Za-z]+([.,] |[-']| ))+[A-Za-z]+[.]?\s*$/, 'Please enter a valid name using only letters, spaces, hyphens, apostrophes, commas, or periods'),
       address: Yup.string()
          .required('Address is required')
-         .matches(/^[a-zA-Z0-9\s-._~:\/\?#\[\]@!$&'\(\)\*\+,;\=]{2,200}$/gi, 'Plase enter a valid address'),
+         .matches(/^[a-zA-Z0-9\s-._~:\/\?#\[\]@!$&'\(\)\*\+,;\=]{2,200}$/gi, 'Invalid input. Special characters like < > { } ^ % | ` " and emojis are not allowed'),
       about: Yup.string()
          .required('Description is required')
          .min(10, 'Description must be at least 10 characters')
-         .max(200, 'Description must not exceed 200 characters')
-         .matches(/^[a-zA-Z0-9\s-._~:\/\?#\[\]@!$&'\(\)\*\+,;\=]{10,200}$/gi, 'Please enter a valid description'),
+         .max(300, 'Description must not exceed 300 characters'),
       phone: Yup.string()
          .required('Phone number is required')
          .matches(/^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[0]?)?[789]\d{9}|(\d[ -]?){10}\d$/, 'Please enter a valid phone number'),

@@ -1,5 +1,6 @@
-import React from 'react';
-import { Box, Card, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import { urlFor } from '../../Client/client';
 import { BsThreeDots } from 'react-icons/bs';
@@ -11,10 +12,133 @@ import { authValues } from '../../Redux/slices/authSlice';
 import { savePin } from '../../Redux/slices/pinThunks';
 import ButtonProgress from './ButtonProgress';
 import PinComments from './PinComments';
-import moment from 'moment';
 import Link from 'next/link';
 import PinURLButton from './PinURLButton';
 import { setSelectedPin } from '../../Redux/slices/pinSlice';
+import { formatDistanceToNow } from 'date-fns';
+import strictLocale from '../../utils/strictLocale';
+
+const cardStyle = theme => ({
+   maxWidth: '1024px',
+   width: '100%',
+   margin: '0 auto',
+   display: 'grid',
+   gridTemplateColumns: '1fr 1fr',
+   overflow: 'hidden',
+   [theme.breakpoints.down('md')]: {
+      gridTemplateColumns: 'none',
+      maxWidth: '508px'
+   }
+});
+
+const imgContainerStyle = theme => ({
+   position: 'relative',
+   height: 'max-content',
+   [theme.breakpoints.down('md')]: {
+      overflow: 'hidden'
+   }
+});
+
+const urlBtnContainerStyle = {
+   position: 'absolute',
+   left: '20px',
+   bottom: '20px'
+};
+
+const contentContainerStyle = theme => ({
+   padding: '2rem',
+   [theme.breakpoints.down('sm')]: {
+      padding: '1.5rem'
+   },
+   [theme.breakpoints.down(350)]: {
+      padding: '1rem'
+   }
+});
+
+const contentHeaderContainerStyle = {
+   display: 'flex',
+   justifyContent: 'space-between',
+   alignItems: 'center'
+};
+
+const categoryTextStyle = theme => ({
+   color: 'text.primary',
+   fontWeight: 600,
+   cursor: 'pointer',
+   [theme.breakpoints.down(350)]: {
+      display: 'none'
+   }
+});
+
+const detailContainerStyle = theme => ({
+   marginTop: '10px',
+   display: 'flex',
+   flexDirection: 'column',
+   rowGap: '1.5rem',
+   [theme.breakpoints.down('sm')]: {
+      rowGap: '1rem'
+   }
+});
+
+const destinationTextStyle = {
+   color: 'text.primary',
+   fontSize: '15px'
+};
+
+const pinTitleStyle = theme => ({
+   color: 'text.primary',
+   fontSize: '2rem',
+   fontWeight: 600,
+   lineHeight: '1.4',
+   [theme.breakpoints.down('md')]: {
+      fontSize: '1.75rem'
+   },
+   [theme.breakpoints.down('sm')]: {
+      fontSize: '1.5rem'
+   },
+   [theme.breakpoints.down(350)]: {
+      fontSize: '1.25rem'
+   }
+});
+
+const pinAboutStyle = theme => ({
+   color: 'text.secondary',
+   marginTop: '3px',
+   fontSize: '15px',
+   [theme.breakpoints.down('sm')]: {
+      fontSize: '14px'
+   },
+   [theme.breakpoints.down(350)]: {
+      fontSize: '14px'
+   }
+});
+
+const dateStyle = {
+   color: 'text.secondary',
+   marginTop: '5px',
+   fontSize: '13px',
+   fontWeight: 600
+};
+
+const userContainerStyle = {
+   display: 'flex',
+   alignItems: 'center',
+   columnGap: '10px'
+};
+
+const userImgContainerStyle = {
+   display: 'flex',
+   alignItems: 'center',
+   cursor: 'pointer'
+};
+
+const userNameStyle = {
+   fontSize: '15px',
+   width: '82%',
+   fontWeight: 600,
+   cursor: 'pointer',
+   width: 'max-content'
+};
 
 const PinDetailsCard = ({ pin, smWidth, mdWidth }) => {
    const { buttonLoading } = useSelector(uiValues);
@@ -26,53 +150,40 @@ const PinDetailsCard = ({ pin, smWidth, mdWidth }) => {
       alreadySaved = Boolean(pin.save.filter(item => item.userId === user.id).length);
    };
 
-   const date = moment(pin.createdAt).fromNow();
+   const date = formatDistanceToNow(new Date(pin.createdAt), {
+      addSuffix: true,
+      locale: strictLocale,
+   });
 
    return (
       <Card
          elevation={0}
-         sx={theme => ({
-            maxWidth: '1024px',
-            width: '100%',
-            margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            [theme.breakpoints.down('md')]: {
-               gridTemplateColumns: 'none',
-               maxWidth: '508px'
-            }
-         })}
+         sx={cardStyle}
       >
          {/* First Box */}
          <Box
-            sx={theme => ({
-               position: 'relative',
-               height: 'max-content',
-               [theme.breakpoints.down('md')]: {
-                  overflow: 'hidden'
-               }
-            })}
             className='pin-card-image-container'
+            sx={imgContainerStyle}
          >
             <Image
+               key={pin._id}
                className='pin-card-image'
                loader={() => urlFor(pin.image).width(500).url()}
                src={urlFor(pin.image).url()}
                alt=''
                layout='fill'
                objectFit='cover'
-               style={{ borderRadius: mdWidth ? '20px 20px 0 0' : '20px 0 0 20px' }}
                quality={50}
                priority
                placeholder='blur'
-               blurDataURL={urlFor(pin.image).url()}
+               blurDataURL={urlFor(pin.image).width(20).blur(50).url()}
             />
             {/* Destination URL */}
             {
                pin.destination &&
                <Box
                   className='pin-details-urlbutton-container'
-                  sx={{ position: 'absolute', left: '20px', bottom: '20px' }}>
+                  sx={urlBtnContainerStyle}>
                   <PinURLButton
                      url={pin.destination}
                      maxWidth='100%'
@@ -84,18 +195,8 @@ const PinDetailsCard = ({ pin, smWidth, mdWidth }) => {
             }
          </Box>
          {/* Second Box */}
-         <Box
-            sx={theme => ({
-               padding: '2rem',
-               [theme.breakpoints.down('sm')]: {
-                  padding: '1.5rem'
-               },
-               [theme.breakpoints.down(350)]: {
-                  padding: '1rem'
-               }
-            })}
-         >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+         <Box sx={contentContainerStyle}>
+            <Box sx={contentHeaderContainerStyle}>
                <Box
                   onClick={e => dispatch(setActionAnchorEl(e.currentTarget))}
                   sx={{ marginLeft: '-10px' }}
@@ -106,16 +207,7 @@ const PinDetailsCard = ({ pin, smWidth, mdWidth }) => {
                </Box>
                <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem' }}>
                   <Link href={`/${pin.category}`}>
-                     <Typography
-                        sx={theme => ({
-                           color: 'text.primary',
-                           fontWeight: 600,
-                           cursor: 'pointer',
-                           [theme.breakpoints.down(350)]: {
-                              display: 'none'
-                           }
-                        })}
-                     >
+                     <Typography sx={categoryTextStyle}>
                         {pin.category.charAt(0).toUpperCase() + pin.category.slice(1)}
                      </Typography>
                   </Link>
@@ -152,77 +244,18 @@ const PinDetailsCard = ({ pin, smWidth, mdWidth }) => {
             </Box>
 
             {/* Pin Details */}
-            <Box
-               sx={theme => ({
-                  marginTop: '10px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  rowGap: '1.5rem',
-                  [theme.breakpoints.down('sm')]: {
-                     rowGap: '1rem'
-                  }
-               })}
-            >
-               <Typography sx={{ color: 'text.primary', fontSize: '15px' }}>
-                  {pin.destination}
-               </Typography>
+            <Box sx={detailContainerStyle}>
+               <Typography sx={destinationTextStyle}>{pin.destination}</Typography>
                <Box>
-                  <Typography
-                     sx={theme => ({
-                        color: 'text.primary',
-                        fontSize: '2rem',
-                        fontWeight: 600,
-                        lineHeight: '1.4',
-                        [theme.breakpoints.down('md')]: {
-                           fontSize: '1.75rem'
-                        },
-                        [theme.breakpoints.down('sm')]: {
-                           fontSize: '1.5rem'
-                        },
-                        [theme.breakpoints.down(350)]: {
-                           fontSize: '1.25rem'
-                        }
-                     })}
-                  >
-                     {pin.title}
-                  </Typography>
-                  <Typography
-                     sx={theme => ({
-                        color: 'text.secondary',
-                        marginTop: '3px',
-                        fontSize: '15px',
-                        [theme.breakpoints.down('sm')]: {
-                           fontSize: '14px'
-                        },
-                        [theme.breakpoints.down(350)]: {
-                           fontSize: '14px'
-                        }
-                     })}
-                  >
-                     {pin.about}
-                  </Typography>
-                  <Typography
-                     sx={{
-                        color: 'text.secondary',
-                        marginTop: '5px',
-                        fontSize: '13px',
-                        fontWeight: 600
-                     }}
-                  >
-                     {date}
-                  </Typography>
+                  <Typography sx={pinTitleStyle}>{pin.title}</Typography>
+                  <Typography sx={pinAboutStyle}>{pin.about}</Typography>
+                  <Typography sx={dateStyle}>{date}</Typography>
                </Box>
 
                {/* User Details */}
-               <Box
-                  sx={{
-                     display: 'flex',
-                     alignItems: 'center',
-                     columnGap: '10px'
-                  }}
-               >
+               <Box sx={userContainerStyle}>
                   <Link href={`/profile/${pin.postedBy._id}`}>
-                     <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                     <Box sx={userImgContainerStyle}>
                         <Image
                            src={pin.postedBy.image ? urlFor(pin.postedBy.image).width(50).url() : '/avatar.png'}
                            alt=''
@@ -236,7 +269,7 @@ const PinDetailsCard = ({ pin, smWidth, mdWidth }) => {
                   <Link href={`/profile/${pin.postedBy._id}`}>
                      <Typography
                         className='text-wrap'
-                        sx={{ fontSize: '15px', width: '82%', fontWeight: 600, cursor: 'pointer', width: 'max-content' }}
+                        sx={userNameStyle}
                      >
                         {pin.postedBy.userName}
                      </Typography>

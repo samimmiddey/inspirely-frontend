@@ -130,3 +130,24 @@ body.dark::-webkit-scrollbar-thumb {
 .card-padding {
    padding: 2.5rem;
 }
+
+/* Button Proggress */
+.btn-loader {
+   border: 3px solid #c0c0c0;
+   border-bottom-color: #919191;
+   border-radius: 50%;
+   display: inline-block;
+   box-sizing: border-box;
+   animation: rotation 1s linear infinite;
+   z-index: 1;
+}
+
+@keyframes rotation {
+   0% {
+      transform: rotate(0deg);
+   }
+
+   100% {
+      transform: rotate(360deg);
+   }
+}
